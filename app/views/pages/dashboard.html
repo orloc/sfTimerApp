@@ -3,14 +3,16 @@
     <div class="row">
         <div class="col-xs-12">
             Next Action area
-            {{ hello }}
+            <next-action-display></next-action-display>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-3">
             <h3>Common Timers</h3>
-            <button class="btn btn-sm btn-default">6m 20s</button>
-            <button class="btn btn-sm btn-default">22m</button>
+            <timer-button duration="6m 20s"></timer-button>
+            <timer-button duration="22m"></timer-button>
+            <timer-button duration="30m"></timer-button>
+            <timer-button duration="15m"></timer-button>
         </div>
         <div class="col-sm-9">
             <h3>Active Timers</h3>
