@@ -1,8 +1,10 @@
-<div class="col-sm-4  col-md-3 col-lg-2">
+<div class="col-md-6 col-lg-4">
     <div class="well">
-        <h5>Label</h5>
-
-
-
+        <timer countdown="30" interval="1000">
+            <h5>Label <span class="pull-right">Remaining time : {{countdown}} second{{secondsS}}</span></h5>
+            <div class="progress progress-striped">
+                <div class="progress-bar pull-left" style="min-width: 2em;width: {{progressBar}}%;"></div>
+            </div>
+        </timer>
     </div>
 </div>

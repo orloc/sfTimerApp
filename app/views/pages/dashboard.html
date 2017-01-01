@@ -1,28 +1,25 @@
 <!-- Page Content -->
-<div ng-controller="dashboardCtrl">
-    <next-action-display></next-action-display>
-    <div class="row">
-        <div class="col-sm-3">
-            <h3>Timers</h3>
-            <p class="small text-muted">Common</p>
-            <timer-button duration="6m 20s"></timer-button>
-            <timer-button duration="15m"></timer-button>
-            <timer-button duration="22m"></timer-button>
-            <timer-button duration="30m"></timer-button>
-            <timer-button duration="1h"></timer-button>
-            <p class="small text-muted">Custom</p>
-            <custom-timer-button></custom-timer-button>
-        </div>
-        <div class="col-sm-9">
-            <h3>Active Timers</h3>
-            <div class="row">
-                <timer-element></timer-element>
-                <timer-element></timer-element>
-                <timer-element></timer-element>
-                <timer-element></timer-element>
-                <timer-element></timer-element>
-                <timer-element></timer-element>
-            </div>
+<div class="row">
+    <div class="col-sm-3">
+        <h3>Timers</h3>
+        <p class="small text-muted">Common</p>
+        <timer-button duration="6m 20s"></timer-button>
+        <timer-button duration="15m"></timer-button>
+        <timer-button duration="22m"></timer-button>
+        <timer-button duration="30m"></timer-button>
+        <timer-button duration="1h"></timer-button>
+        <p class="small text-muted">Custom</p>
+        <custom-timer-button></custom-timer-button>
+    </div>
+    <div class="col-sm-9">
+        <h3>Active Timers</h3>
+        <div class="row">
+            <timer-element></timer-element>
+            <timer-element></timer-element>
+            <timer-element></timer-element>
+            <timer-element></timer-element>
+            <timer-element></timer-element>
+            <timer-element></timer-element>
         </div>
     </div>
 </div>
