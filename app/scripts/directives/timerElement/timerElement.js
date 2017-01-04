@@ -4,14 +4,41 @@ angular.module('sfTimer').directive('timerElement', [function(){
     return {
         templateUrl: 'views/directives/timerElementTemplate.html',
         scope: {
-            label: '=',
-            duration: '='
+            timerConfig: '='
         },
-        controller: ['$scope', function($scope){
+        controller: ['$scope', function($scope, elem){
             // find h / m / s ( in order ) 
             // if non 0 - add index to object and remove 
             // call again until no more symbols found
+            var localConfig = $scope.timerConfig;
+            var momentDuration = getDuration(localConfig.duration);
+            var desiredTime = moment(localConfig.start_time).add(momentDuration);
+            
+            $scope.durationMilliseconds = desiredTime.diff(localConfig.start_time, 'seconds');
+            
+            $scope.timerRunning = false;
+            
+            $scope.togglePause = function(){
+                if ($scope.timerRunning){
+                    $scope.$broadcast('timer-stop');
+                    $scope.timerRunning = false;
+                    return;
+                }
+                
+                $scope.$broadcast('timer-start');
+                $scope.timerRunning = true;
+            };
 
+            $scope.resetTimer = function(){
+                $scope.$broadcast('timer-reset');
+                $scope.$broadcast('timer-start');
+                $scope.timerRunning = true;
+            };
+            
+            $scope.removeTimer = function(){
+                // broadcast an event that removes the data
+            };
+            
             function trimTime(time, lastUnit){
                 var split = time.split(lastUnit);
                 return split.length > 1 ? parseInt(split[1]) : parseInt(split[0]);
@@ -25,7 +52,7 @@ angular.module('sfTimer').directive('timerElement', [function(){
                 }
             }
 
-            function formatDuration(){
+            function formatDuration(durationString){
                 var sections = [ 'h', 'm', 's'];
                 function recurse(string, acc, res){
                     if (!sections[acc]) return res;
@@ -38,19 +65,15 @@ angular.module('sfTimer').directive('timerElement', [function(){
                     return recurse(string, acc+1, res);
                 }
                 
-                return recurse($scope.duration, 0, []);
+                return recurse(durationString, 0, []);
             }
             
-            function getDuration(){
-                return moment.duration(_.reduce(formatDuration(), function(old, item) {
+            function getDuration(durationString){
+                return moment.duration(_.reduce(formatDuration(durationString), function(old, item) {
                     old[item.unit] = item.value;
                     return old;
-                }, {}));;
+                }, {}));
             }
-            
-            console.log(getDuration());
-            
-            $scope.formattedDuration = 500;
         }]
     };
 }]);

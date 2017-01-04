@@ -1,11 +1,21 @@
 <div class="col-md-6 col-lg-4">
     <div class="well">
-        <timer countdown="formattedDuration" interval="1000">
-            <h5>{{ $parent.label }} <span class="pull-right small">Remaining: {{countdown}} second{{secondsS}}</span></h5>
+        <timer countdown="durationMilliseconds" interval="1000" auto-start="false">
+            <h5>{{ $parent.timerConfig.label }}
+                <span class="muted small"> - {{ $parent.timerConfig.duration}}</span>
+                <span class="pull-right small">Remaining: {{countdown}} second{{secondsS}}</span></h5>
+
             <br>
             <div class="progress progress-striped">
-                <div class="progress-bar pull-left" style="min-width: 3em;width: {{progressBar}}%;"></div>
+                <div class="progress-bar pull-left" style="min-width: 1em;width: {{progressBar}}%;"></div>
             </div>
         </timer>
+
+        <button class="btn btn-sm btn-default pull-left" ng-click="togglePause()">Pause</button>
+        <div class="btn-group pull-right">
+            <button class="btn btn-sm btn-default" ng-click="resetTimer()">Reset</button>
+            <button class="btn btn-sm btn-warning">Cancel</button>
+        </div>
+        <div class="clearfix"></div>
     </div>
 </div>

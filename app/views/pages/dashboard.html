@@ -13,7 +13,7 @@
         <h3>Active Timers</h3>
         <div class="row" ng-controller="timerGridCtrl">
             <h4 ng-if="!activeTimers.length" class="text-center muted">No Timers</h4>
-            <timer-element ng-repeat="timer in activeTimers" label="timer.label" duration="timer.duration"></timer-element>
+            <timer-element ng-repeat="timer in activeTimers" timer-config="timer"></timer-element>
         </div>
     </div>
 </div>
