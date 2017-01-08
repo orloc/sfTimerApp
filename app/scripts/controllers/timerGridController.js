@@ -15,5 +15,9 @@ angular.module('sfTimer')
 
     $scope.getCommonTimers = function(){
         return commonTimes;
-    }
+    };
+    
+    $scope.$on('eqt-remove-timer', function(e, data) {
+        console.log(data);  
+    });
 }]);

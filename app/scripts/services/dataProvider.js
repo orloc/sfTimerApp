@@ -4,42 +4,41 @@ angular.module('sfTimer')
 .service('dataProvider', ['$http', function($http){
     
     this.getAllTimers = function(){
+console.log({
+    id: 1,
+    start_time: moment(),
+    reset_count: 0,
+    duration: '6m20s',
+    label: '6 spawn'
+});
         return [
             {
+                id: 1,
+                start_time: moment(),
+                reset_count: 0,
+                duration: '6m20s',
+                label: '6 spawn'
+            },
+            {
+                id: 2,
                 duration: '20s',
                 label: 'Test',
                 start_time: moment(),
                 reset_count: 0
             },
             {
-                duration: '12m',
-                label: 'Dune',
-                start_time: moment(),
-                reset_count: 0
-            },
-            {
-                duration: '2m',
-                label: 'Left Tree',
-                start_time: moment(),
-                reset_count: 0
-            },
-            {
-                duration: '1h2m',
+                id: 3,
+                duration: '22m',
                 label: 'Lefts Tree',
                 start_time: moment(),
                 reset_count: 0
             },
             {
+                id: 4,
                 duration: '22m',
                 label: 'Path',
                 start_time: moment(),
                 reset_count: 0
-            },
-            {
-                start_time: moment(),
-                reset_count: 0,
-                duration: '6m20s',
-                label: '6 spawn'
             }
         ];
     };

@@ -6,10 +6,7 @@ angular.module('sfTimer').directive('timerElement', [function(){
         scope: {
             timerConfig: '='
         },
-        controller: ['$scope', function($scope, elem){
-            // find h / m / s ( in order ) 
-            // if non 0 - add index to object and remove 
-            // call again until no more symbols found
+        controller: ['$scope', function($scope){
             var localConfig = $scope.timerConfig;
             var momentDuration = getDuration(localConfig.duration);
             var desiredTime = moment(localConfig.start_time).add(momentDuration);
@@ -36,7 +33,14 @@ angular.module('sfTimer').directive('timerElement', [function(){
             };
             
             $scope.removeTimer = function(){
-                // broadcast an event that removes the data
+                $scope.$emit('eqt-remove-timer', localConfig);
+            };
+
+            $scope.getRemainingTime = function(time){
+                if (time > 60) {
+                    return Math.floor(time/60)+'m'+(time%60)+'s';
+                }
+                return time%60+'s';
             };
             
             function trimTime(time, lastUnit){
@@ -52,6 +56,9 @@ angular.module('sfTimer').directive('timerElement', [function(){
                 }
             }
 
+            // find h / m / s ( in order )
+            // if non 0 - add index to object and remove
+            // call again until no more symbols found
             function formatDuration(durationString){
                 var sections = [ 'h', 'm', 's'];
                 function recurse(string, acc, res){
