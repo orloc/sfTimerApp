@@ -5,13 +5,13 @@ angular.module('sfTimer')
     var self = this;
     $rootScope.socket_connected = false;
     self.socket_connected = false;
-    
+        
     try {
-        socket = io.connect('http://localhost:3000');
+        socket = io.connect('http://162.243.58.183:3000');
         syncState(true);
     } catch (e){
         $interval(function(){
-            socket = io.connect('http://localhost:3000');
+            socket = io.connect('http://162.243.58.183:3000');
         }, 3000).then(function(){
             console.log(socket, 'here');
         });
