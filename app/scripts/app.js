@@ -8,7 +8,12 @@ angular.module('sfTimer', [
 ])
 .constant('apiConfig', {
     baseUrl: 'http://eqt.dev',
-    apiVersion: 'api/v1'
+    apiVersion: 'api/v1',
+    socketEvents: {
+        TIMER_REMOVED: 'eqt:timer:removed',
+        TIMER_ADDED: 'eqt:timer:added',
+        TIMER_STARTED: 'eqt:timer:started'
+    }
 })
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouteProvider) {
     $stateProvider.state('app', {

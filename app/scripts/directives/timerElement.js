@@ -22,6 +22,7 @@ angular.module('sfTimer').directive('timerElement', [function(){
                 }
                 
                 $scope.$broadcast('timer-start');
+                $scope.$emit('eqt-start-timer', localConfig);
                 $scope.timerRunning = true;
             };
 

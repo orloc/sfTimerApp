@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('sfTimer').factory('timeManager', ['dataProvider', '$q', function(dataProvider, $q){
+angular.module('sfTimer')
+.factory('timeManager', ['dataProvider', '$q', function(dataProvider, $q){
     return {
         createTimer: createTimer,
         getTimes: getTimes,
