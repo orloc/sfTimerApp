@@ -14,9 +14,28 @@ angular.module('sfTimer').directive('timerElement', [function(){
             $scope.durationMilliseconds = desiredTime.diff(localConfig.start_time, 'seconds');
             $scope.timerRunning = false;
             
+            $scope.$on('eqt-start-specific-timer', function(e, data){
+                if (data.label === localConfig.label){
+                    $scope.$broadcast('timer-start');
+                    $scope.$apply(function(){
+                        $scope.timerRunning = true;
+                    });
+                }  
+            });
+
+            $scope.$on('eqt-pause-specific-timer', function(e, data){
+                if (data.label === localConfig.label){
+                    $scope.$broadcast('timer-stop');
+                    $scope.$apply(function(){
+                        $scope.timerRunning = false;
+                    });
+                }
+            });
+            
             $scope.togglePause = function(){
                 if ($scope.timerRunning){
                     $scope.$broadcast('timer-stop');
+                    $scope.$emit('eqt-pause-timer', localConfig);
                     $scope.timerRunning = false;
                     return;
                 }

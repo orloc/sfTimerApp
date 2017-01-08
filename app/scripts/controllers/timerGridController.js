@@ -57,6 +57,11 @@ angular.module('sfTimer')
     });
 
     socket.on(apiConfig.socketEvents.TIMER_STARTED, function(data){
+        $scope.$broadcast('eqt-start-specific-timer', data);
+    });
+
+    socket.on(apiConfig.socketEvents.TIMER_PAUSED, function(data){
+        $scope.$broadcast('eqt-pause-specific-timer', data);
     });
 
     $scope.$on('eqt-created-timer', function(e, data){
@@ -65,8 +70,11 @@ angular.module('sfTimer')
     });
         
     $scope.$on('eqt-start-timer', function(e, data){
-        data.start_time = moment().unix();
         socket.emit(apiConfig.socketEvents.TIMER_STARTED, data);
+    });
+
+    $scope.$on('eqt-pause-timer', function(e, data){
+        socket.emit(apiConfig.socketEvents.TIMER_PAUSED, data);
     });
     
     $scope.$on('eqt-remove-timer', function(e, data) {
