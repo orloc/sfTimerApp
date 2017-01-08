@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sfTimer').directive('customTimerButton', ['dataProvider', function(dataProvider){
+angular.module('sfTimer').directive('customTimerButton', ['timeManager', 'eventBroadcaster', function(timeManager, eventBroadcaster){
     return {
         templateUrl: 'views/directives/customTimerButtonTemplate.html',
         controller: ['$scope', function($scope){
@@ -14,9 +14,10 @@ angular.module('sfTimer').directive('customTimerButton', ['dataProvider', functi
             $scope.submit= function(){
                 $scope.formError = null;
                 $scope.formSuccess = null;
-                dataProvider.createTimer($scope.formData)
+                timeManager.createTimer($scope.formData)
                     .then(function(data){
                         $scope.formSuccess = true;
+                        eventBroadcaster.broadcast('eqt-created-timer', data.data);
                     }, function(err){
                         $scope.formError = err.data.message;
                     });

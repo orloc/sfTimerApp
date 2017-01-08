@@ -19,7 +19,16 @@ angular.module('sfTimer')
         return commonTimes;
     };
     
+    $scope.$on('eqt-created-timer', function(e, data){
+        $scope.activeTimers.push(data);
+    });
+    
     $scope.$on('eqt-remove-timer', function(e, data) {
-        console.log(data);  
+        timeManager.removeTimer(data.label)
+            .then(function(response){
+                $scope.activeTimers = _.filter($scope.activeTimers, function(i){
+                    return i.label !== data.label;
+                });
+            });
     });
 }]);

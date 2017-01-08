@@ -2,8 +2,7 @@
 
 angular.module('sfTimer')
 .service('dataProvider', ['$http', 'apiConfig', '$q', function($http, apiConfig, $q){
-    
-    
+
     this.getAllTimers = function(){
         return $http.get(getResourceUrl('timer'))
             .then(function (response) {
@@ -13,6 +12,10 @@ angular.module('sfTimer')
     
     this.createTimer = function(data) {
         return $http.post(getResourceUrl('timer'), data);
+    };
+
+    this.removeTimer = function(label) {
+        return $http.delete(getResourceUrl('timer/' + label.replace(' ','_')));
     };
     
     function getResourceUrl(resource){
