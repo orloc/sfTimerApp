@@ -10,8 +10,10 @@ angular.module('sfTimer')
         { duration: '30m'},
         { duration: '1h'}
     ];
-    
-    $scope.activeTimers = timeManager.getTimes();
+
+    timeManager.getTimes().then(function(times){
+        $scope.activeTimers = times;
+    });
 
     $scope.getCommonTimers = function(){
         return commonTimes;

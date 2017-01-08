@@ -10,7 +10,7 @@ angular.module('sfTimer').factory('timeManager', ['dataProvider', function(dataP
         return dataProvider.getAllTimers();
     }
     
-    function createTimer(duration){
+    function createTimer(duration, label){
         
     }
 }]);

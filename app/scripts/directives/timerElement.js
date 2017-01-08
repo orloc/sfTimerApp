@@ -12,7 +12,6 @@ angular.module('sfTimer').directive('timerElement', [function(){
             var desiredTime = moment(localConfig.start_time).add(momentDuration);
             
             $scope.durationMilliseconds = desiredTime.diff(localConfig.start_time, 'seconds');
-            
             $scope.timerRunning = false;
             
             $scope.togglePause = function(){

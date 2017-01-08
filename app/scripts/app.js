@@ -6,6 +6,10 @@ angular.module('sfTimer', [
     'timer',
     'ui.router'
 ])
+.constant('apiConfig', {
+    baseUrl: 'http://eqt.dev',
+    apiVersion: 'api/v1'
+})
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouteProvider) {
     $stateProvider.state('app', {
         url: '/dashboard',
