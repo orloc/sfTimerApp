@@ -7,7 +7,7 @@ angular.module('sfTimer', [
     'ui.router'
 ])
 .constant('apiConfig', {
-    baseUrl: 'http://eqt.dev',
+    baseUrl: 'http://eqt.orloc.me',
     apiVersion: 'api/v1',
     socketEvents: {
         TIMER_REMOVED: 'eqt:timer:removed',
