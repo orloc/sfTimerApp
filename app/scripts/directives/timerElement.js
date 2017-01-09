@@ -31,7 +31,17 @@ angular.module('sfTimer').directive('timerElement', [function(){
                     });
                 }
             });
-            
+
+            $scope.$on('eqt-reset-specific-timer', function(e, data){
+                if (data.label === localConfig.label){
+                    $scope.$broadcast('timer-reset');
+                    $scope.$broadcast('timer-start');
+                    $scope.$apply(function(){
+                        $scope.timerRunning = true;
+                    });
+                }
+            });
+
             $scope.togglePause = function(){
                 if ($scope.timerRunning){
                     $scope.$broadcast('timer-stop');
@@ -48,6 +58,7 @@ angular.module('sfTimer').directive('timerElement', [function(){
             $scope.resetTimer = function(){
                 $scope.$broadcast('timer-reset');
                 $scope.$broadcast('timer-start');
+                $scope.$emit('eqt-reset-timer', localConfig);
                 $scope.timerRunning = true;
             };
             

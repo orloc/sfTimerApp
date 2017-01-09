@@ -13,6 +13,7 @@ angular.module('sfTimer', [
         TIMER_REMOVED: 'eqt:timer:removed',
         TIMER_ADDED: 'eqt:timer:added',
         TIMER_STARTED: 'eqt:timer:started',
+        TIMER_RESET: 'eqt:timer:reset',
         TIMER_PAUSED: 'eqt:timer:paused'
     }
 })
