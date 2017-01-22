@@ -4,6 +4,7 @@ angular.module('sfTimer', [
     'ngRoute',
     'ngSanitize',
     'timer',
+    'angular-web-notification',
     'ui.router'
 ])
 .constant('apiConfig', {

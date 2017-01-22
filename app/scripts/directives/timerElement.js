@@ -6,64 +6,96 @@ angular.module('sfTimer').directive('timerElement', [function(){
         scope: {
             timerConfig: '='
         },
-        controller: ['$scope', function($scope){
+        controller: ['$scope', 'SFTimerEvents', 'webNotification', function($scope, SFTimerEvents, webNotification){
             var localConfig = $scope.timerConfig;
             var momentDuration = getDuration(localConfig.duration);
             var desiredTime = moment(localConfig.start_time).add(momentDuration);
+
+            var timerEvents = {
+                START: 'timer-start',
+                STOP: 'timer-stop',
+                RESET: 'timer-reset',
+                TIMER_STOPPED: 'timer-stopped',
+                TICK: 'timer-tick'
+            };
             
-            $scope.durationMilliseconds = desiredTime.diff(localConfig.start_time, 'seconds');
+            var statuses = {
+                BEGUN: 'info',
+                HALF: 'warning',
+                ENDING: 'danger'
+            };
+
+
+            $scope.durationSeconds = desiredTime.diff(localConfig.start_time, 'seconds');
             $scope.timerRunning = false;
+            $scope.hasStopped = false;
+            $scope.noShake = false;
+            $scope.showNotifications = true;
             
-            $scope.$on('eqt-start-specific-timer', function(e, data){
-                if (data.label === localConfig.label){
-                    $scope.$broadcast('timer-start');
-                    $scope.$apply(function(){
-                        $scope.timerRunning = true;
-                    });
-                }  
+            $scope.toggleNotifications = function() {
+                $scope.showNotifications = !$scope.showNotifications;
+            };
+            
+            $scope.$on(timerEvents.TIMER_STOPPED, function (e, val) {
+                $scope.timerRunning = false;
+                $scope.$apply(function(){
+                    $scope.hasStopped = true;
+                    $scope.noShake = false;
+                });
+                
+                webNotification.showNotification('Timer Expired!', {
+                    body: localConfig.label +'\'s timer has stopped!',
+                    icon: 'my-icon.ico',
+                    onClick: function onNotificationClicked() {
+                        console.log('Notification clicked.');
+                    },
+                    autoClose: 15000 //auto close the notification after 4 seconds (you can manually close it via hide function)
+                }, function onShow(error, hide) {
+                    if (error) {
+                        window.alert('Unable to show notification: ' + error.message);
+                    } else {
+                        console.log('Notification Shown.');
+                    }
+                });
             });
 
-            $scope.$on('eqt-pause-specific-timer', function(e, data){
-                if (data.label === localConfig.label){
-                    $scope.$broadcast('timer-stop');
-                    $scope.$apply(function(){
-                        $scope.timerRunning = false;
-                    });
-                }
-            });
-
-            $scope.$on('eqt-reset-specific-timer', function(e, data){
-                if (data.label === localConfig.label){
-                    $scope.$broadcast('timer-reset');
-                    $scope.$broadcast('timer-start');
-                    $scope.$apply(function(){
-                        $scope.timerRunning = true;
-                    });
-                }
+            $scope.$on(timerEvents.TICK, function (event, data) {
+                var percentDone = Math.floor((data.millis / ($scope.durationSeconds * 1000)) * 100);
+                if (percentDone === 100) return statuses.BEGUN;
+                $scope.$apply(function(){
+                    $scope.status = (function(){
+                        if (percentDone >= 50) return statuses.BEGUN;
+                        if (percentDone < 50 && percentDone > 15) return statuses.HALF;
+                        return statuses.ENDING;
+                    })();
+                });
             });
 
             $scope.togglePause = function(){
                 if ($scope.timerRunning){
-                    $scope.$broadcast('timer-stop');
-                    $scope.$emit('eqt-pause-timer', localConfig);
+                    $scope.$broadcast(timerEvents.STOP);
+                    $scope.$emit(SFTimerEvents.PAUSE_TIMER, localConfig);
                     $scope.timerRunning = false;
                     return;
                 }
                 
-                $scope.$broadcast('timer-start');
-                $scope.$emit('eqt-start-timer', localConfig);
+                $scope.$broadcast(timerEvents.START);
+                $scope.$emit(SFTimerEvents.START_TIMER, localConfig);
                 $scope.timerRunning = true;
+                $scope.hasStopped = false;
+                $scope.noShake = false;
             };
 
             $scope.resetTimer = function(){
-                $scope.$broadcast('timer-reset');
-                $scope.$broadcast('timer-start');
-                $scope.$emit('eqt-reset-timer', localConfig);
+                $scope.$broadcast(timerEvents.RESET);
+                $scope.$emit(SFTimerEvents.RESET_TIMER, localConfig);
                 $scope.timerRunning = true;
+                $scope.hasStopped = false;
+                $scope.noShake = false;
             };
             
             $scope.removeTimer = function(){
-                $scope.$emit('eqt-remove-timer', localConfig);
+                $scope.$emit(SFTimerEvents.REMOVE_TIMER, localConfig);
             };
 
             $scope.getRemainingTime = function(time){
@@ -72,6 +104,40 @@ angular.module('sfTimer').directive('timerElement', [function(){
                 }
                 return time%60+'s';
             };
+
+            $scope.acknowledge = function(){
+                if (!$scope.hasStopped) return;
+                $scope.noShake = true;
+            };
+
+            // SOCKET EVENT RESPONSES FROM GRID
+            $scope.$on(SFTimerEvents.START_SPECIFIC_TIMER, function(e, data){
+                if (data.label === localConfig.label){
+                    $scope.$broadcast(timerEvents.START);
+                    $scope.$apply(function(){
+                        $scope.timerRunning = true;
+                    });
+                }
+            });
+
+            $scope.$on(SFTimerEvents.PAUSE_SPECIFIC_TIMER, function(e, data){
+                if (data.label === localConfig.label){
+                    $scope.$broadcast(timerEvents.STOP);
+                    $scope.$apply(function(){
+                        $scope.timerRunning = false;
+                    });
+                }
+            });
+
+            $scope.$on(SFTimerEvents.RESET_SPECIFIC_TIMER, function(e, data){
+                if (data.label === localConfig.label){
+                    $scope.$broadcast(timerEvents.RESET);
+                    $scope.$broadcast(timerEvents.START);
+                    $scope.$apply(function(){
+                        $scope.timerRunning = true;
+                    });
+                }
+            });
             
             function trimTime(time, lastUnit){
                 var split = time.split(lastUnit);

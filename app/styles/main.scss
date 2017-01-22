@@ -5,6 +5,10 @@ html, body {
   color: $fontC;
 }
 
+.container {
+  max-width: 1480px;
+}
+
 nav.navbar-inverse{
   background-color: $darkerB;
   border-color: $darkB;
@@ -24,13 +28,11 @@ p, li, a, span, button, input {
 }
 
 .side-bar {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  padding: 2em;
-  padding-top: 4em;
   height: 100%;
-  background-color: $darkB;
+  padding-left: 3em;
+  padding-right: 3em;
+  padding-bottom: 2em;
+  border: 1px solid $darkB;
 
 }
 

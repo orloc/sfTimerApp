@@ -8,11 +8,10 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css" />
     <!-- bower:css -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Abel|Ubuntu" rel="stylesheet">
-
+    <link rel="stylesheet" href="/bower_components/csshake/dist/csshake.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -31,8 +30,6 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-
-
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
@@ -48,7 +45,9 @@
     <script src="/bower_components/moment/moment.js"></script>
     <script src="/bower_components/humanize-duration/humanize-duration.js"></script>
     <script src="/bower_components/angular-timer/dist/angular-timer.js"></script>
-
+    <script src="/bower_components/html5-desktop-notifications2/dist/Notification.js"></script>
+    <script src="/bower_components/simple-web-notification/web-notification.js"></script>
+    <script src="/bower_components/angular-web-notification/angular-web-notification.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -58,6 +57,7 @@
     <script src="/scripts/services/dataProvider.js"></script>
     <script src="/scripts/services/eventBroadcaster.js"></script>
     <script src="/scripts/services/timeManager.js"></script>
+    <script src="/scripts/services/TimerEvents.js"></script>
     <script src="/scripts/services/socketManager.js"></script>
 
     <script src="/scripts/controllers/timerGridController.js"></script>
