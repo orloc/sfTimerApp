@@ -1,9 +1,13 @@
-<form name="customTimerForm" ng-submit="submit()">
-    <div ng-show="formSuccess" class="alert alert-success">
+<form name="customTimerForm"
+      ng-class="{
+        'form form-inline': inline
+      }"
+      ng-submit="submit()">
+    <div ng-show="formSuccess" class="alert alert-success pull-left">
         <p>Time added!</p>
     </div>
 
-    <div ng-show="formError" class="alert alert-danger">
+    <div ng-show="formError" class="alert alert-danger pull-left">
         <p>{{ formError}}</p>
     </div>
     <div class="form-group">
@@ -22,10 +26,10 @@
                type="text"
                class="form-control"
                placeholder="Label">
+        <button type="submit"
+                ng-disabled="customTimerForm.$invalid"
+                class="btn btn-default btn-sm">
+            Create
+        </button>
     </div>
-    <button type="submit"
-           ng-disabled="customTimerForm.$invalid"
-           class="btn btn-block">
-        Create
-    </button>
 </form>

@@ -1,0 +1,19 @@
+nav.navbar-inverse{
+  background-color: #5C5854;
+  color: #e3e3e3;
+  h2 { margin: 5px; }
+}
+
+
+.help-link {
+    font-size: 3rem;
+    margin:0;
+    margin-left: 1em;
+    height: 50px;
+    color: $fontC;
+    i { margin-top: 0.35em; }
+    &:hover {
+        cursor: pointer;
+        color: lighten($fontC, 30);
+    }
+  }

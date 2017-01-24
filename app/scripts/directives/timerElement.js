@@ -25,7 +25,6 @@ angular.module('sfTimer').directive('timerElement', [function(){
                 ENDING: 'danger'
             };
 
-
             $scope.durationSeconds = desiredTime.diff(localConfig.start_time, 'seconds');
             $scope.timerRunning = false;
             $scope.hasStopped = false;

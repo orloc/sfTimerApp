@@ -1,34 +1,13 @@
 <!-- Page Content -->
-<div class="row">
-    <div class="col-sm-3 side-bar hidden-xs">
-        <h3>Timers</h3>
-        <div class="row" ng-controller="timeSelectionCtrl">
-            <!--
-            <p class="small text-muted">Common</p>
-            <timer-button ng-repeat="time in getCommonTimers()" duration="{{ time.duration }}"></timer-button>
-            -->
-            <ul class="help">
-                <li>Duration Format should be as follows e.g.<br>
-                    <span class="small">7h34m43s</span>
-                </li>
-            </ul>
-            <p class="small">Custom</p>
-
-            <!--
-            <div ng-show="!socket_connected" class="socket-connection">
-                <p>WARNING: No Socket Connection <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-<br>
-                <span class="small">Data will not be synced</span></p>
-            </div>
-            -->
-        </div>
-    </div>
-    <div class="col-xs-3"></div>
-    <div class="col-sm-9 grid">
-        <h3>Active Timers</h3>
+<div class="row timer-grid">
+    <div class="col-sm-6 grid">
         <div class="row" ng-controller="timerGridCtrl">
-            <h4 ng-if="!activeTimers.length" class="text-center muted">No Timers</h4>
+            <h4 ng-if="!activeTimers.length" class="text-center muted no-timers">No Timers</h4>
             <timer-element ng-repeat="timer in activeTimers" timer-config="timer"></timer-element>
         </div>
     </div>
+    <div class="col-sm-6 active-members">
+
+    </div>
 </div>
+
