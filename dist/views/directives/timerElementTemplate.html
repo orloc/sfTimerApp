@@ -1,25 +1,28 @@
-<div class="col-sm-4 col-lg-3">
-    <div class="well" ng-class="{ 'shake-chunk shake-constant shake-constant--hover' : hasStopped && !noShake }" ng-click="acknowledge()">
+<div class="col-sm-4">
+    <div class="timer" ng-class="{ 'shake-chunk shake-constant shake-constant--hover' : hasStopped && !noShake }" ng-click="acknowledge()">
         <timer countdown="durationSeconds" interval="1000" auto-start="false">
-            <h5>{{ $parent.timerConfig.label }}
-                <span class="muted small"> - {{ $parent.timerConfig.duration}}</span>
-                <p class="pull-right">
-                    <span ng-bind="$parent.getRemainingTime(countdown)"></span>
-                </p>
-            </h5>
-            <div class="progress">
-                <div class="progress-bar pull-left progress-bar-{{status}}"
-                     style="min-width: 1em;width: {{progressBar}}%;"></div>
+            <div class="inner-timer">
+                <div class="header">
+                    <h5>{{ $parent.timerConfig.label }}
+                        <span class="muted small"> - {{ $parent.timerConfig.duration}}</span>
+                        <p class="pull-right">
+                            <span ng-bind="$parent.getRemainingTime(countdown)"></span>
+                        </p>
+                    </h5>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar pull-left progress-bar-{{status}}"
+                         style="min-width: 1em;width: {{progressBar}}%;"></div>
+                </div>
+                <div ng-if="hasStopped && !noShake">
+                    <h4 class="text-center muted">Click the timer to STOP the shaking.</h4>
+                </div>
+                <div class="btn-group pull-right">
+                    <button class="btn btn-sm btn-default" ng-click="resetTimer()">Reset</button>
+                    <button class="btn btn-sm btn-warning" ng-click="removeTimer()"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="clearfix"></div>
             </div>
         </timer>
-
-        <button ng-if="timerRunning" class="btn btn-sm btn-default pull-left" ng-click="togglePause()">
-            <i ng-class="{ 'fa fa-pause': timerRunning, 'fa fa-play': !timerRunning}"></i>
-        </button>
-        <div class="btn-group pull-right">
-            <button class="btn btn-sm btn-default" ng-click="resetTimer()">Reset</button>
-            <button class="btn btn-sm btn-warning" ng-click="removeTimer()"><i class="fa fa-times"></i></button>
-        </div>
-        <div class="clearfix"></div>
     </div>
 </div>
