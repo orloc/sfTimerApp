@@ -4,13 +4,19 @@ angular.module('sfTimer').directive('customTimerButton', ['timeManager', 'eventB
     return {
         templateUrl: 'views/directives/customTimerButtonTemplate.html',
         scope: {
-            inline: '='  
+            inline: '=',
+            needsAuth: '@'
         }, 
-        controller: ['$scope', function($scope){
-            
+        controller: ['$rootScope','$scope', function($rootScope, $scope){
             $scope.durationPattern = /^(([1-5]?[0-9]){1,2}[h|m|s]){1,3}$/img;
             $scope.formData = {};
-
+            
+            $scope.isAuthed = function(){
+                console.log($scope.needsAuth, !$scope.needsAuth 
+                    ? true 
+                    : $rootScope.isAuthed);
+            };
+            
             $scope.formError = null;
             $scope.formSuccess = null;
             

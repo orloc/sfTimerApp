@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sfTimer')
-    .service('SFTimerEvents', [ function(dataProvider, $q){
+    .service('SFTimerEvents', [ function(){
         this.TIMER_CREATED = 'eqt-created-timer';
         this.START_TIMER = 'eqt-start-timer';
         this.RESET_TIMER = 'eqt-reset-timer';
