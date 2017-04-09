@@ -6,7 +6,7 @@ angular.module('sfTimer').directive('timerElement', [function(){
         scope: {
             timerConfig: '='
         },
-        controller: ['$scope', 'SFTimerEvents', 'webNotification', function($scope, SFTimerEvents, webNotification){
+        controller: ['$scope', '$rootScope', 'SFTimerEvents', 'webNotification', function($scope, $rootScope, SFTimerEvents, webNotification){
             var localConfig = $scope.timerConfig;
             var momentDuration = getDuration(localConfig.duration);
             var desiredTime = moment(localConfig.start_time).add(momentDuration);
@@ -30,11 +30,15 @@ angular.module('sfTimer').directive('timerElement', [function(){
             $scope.hasStopped = false;
             $scope.noShake = false;
             $scope.showNotifications = true;
+
+            $rootScope.$watch('isAuthed', function(val){
+                $scope.hasAuth = val;
+            });
             
             $scope.toggleNotifications = function() {
                 $scope.showNotifications = !$scope.showNotifications;
             };
-            
+
             $scope.$on(timerEvents.TIMER_STOPPED, function (e, val) {
                 $scope.timerRunning = false;
                 $scope.$apply(function(){
