@@ -47,7 +47,6 @@ angular.module('sfTimer', [
         
     $urlRouteProvider.otherwise('');
         
-        
     jwtOptionsProvider.config({
         tokenGetter: [ 'store', 'apiConfig', function(store, apiConfig){
             var token = store.get(apiConfig.tokenStorageName);
