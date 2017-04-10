@@ -6,8 +6,6 @@
 @import 'timerElement';
 
 
-
-
 html, body {
   color: $fontC;
   background: url(../images/bg.jpg) no-repeat center center fixed;
@@ -72,4 +70,17 @@ button.btn.btn-primary {
 
 }
 
+// landing page stuff
+.landing-page {
+  margin-top: 10em;
+  h1, h2, h3, h4, h5, h6, p, span {
+    color: black;
+  }
+
+  h1 {
+    margin-top: .1em;
+  }
+}
+
+// login page stuff
 

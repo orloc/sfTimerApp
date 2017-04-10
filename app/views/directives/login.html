@@ -1,0 +1,31 @@
+<form name="loginForm"
+      ng-class="{
+    'form form-inline': inline
+  }"
+      ng-submit="submit()">
+    <div class="form-group">
+        <input name="username"
+               type="text"
+               required
+               ng-model="formData.username"
+               class="form-control"
+               placeholder="Username">
+    </div>
+    <div class="form-group">
+        <input name="password"
+               required
+               ng-model="formData.password"
+               type="password"
+               class="form-control"
+               placeholder="Password">
+        <div class="btn-group">
+            <button type="submit"
+                    ng-disabled="customTimerForm.$invalid"
+                    class="btn btn-default btn-sm"> Login </button>
+            <button type="button"
+                    ng-click="goRegister()"
+                    class="btn btn-link btn-sm">or Register</button>
+        </div>
+        <button class="btn btn-sm btn-default pull-right">Guest Login</button>
+    </div>
+</form>

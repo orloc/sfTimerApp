@@ -25,7 +25,7 @@ angular.module('sfTimer', [
     function ($stateProvider, $urlRouteProvider, $httpProvider, jwtOptionsProvider) {
     $stateProvider.state('app', {
         url: '',
-        templateUrl: 'views/pages/dashboard.html',
+        templateUrl: 'views/pages/landing.html',
         data: { requireLogin: false }
     });
         
@@ -34,13 +34,18 @@ angular.module('sfTimer', [
         data: { requireLogin: true }
     });
 
+    $stateProvider.state('app.authed.dashboard', {
+        url: '/dashboard',
+        templateUrl: 'views/pages/dashboard.html'
+    });
+        
     $stateProvider.state('app.authed.user', {
         url: '/users',
         templateUrl: 'views/pages/users.html'
     });
         
         
-    $urlRouteProvider.otherwise('/dashboard');
+    $urlRouteProvider.otherwise('');
         
         
     jwtOptionsProvider.config({
@@ -66,6 +71,10 @@ angular.module('sfTimer', [
             var token = store.get(apiConfig.tokenStorageName);
             if (!token) return;
         })();
+        
+        if (validToken && $rootScope.isAuthed && to.name === 'app'){
+            $state.go('app.authed.dashboard');
+        }
         
         if (to.data && to.data.requireLogin ) {
             $rootScope.isAuthed = validToken
