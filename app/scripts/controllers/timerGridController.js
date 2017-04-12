@@ -3,14 +3,6 @@ angular.module('sfTimer')
 .controller('timerGridCtrl', ['$scope', 'timeManager', 'SFTimerEvents', 'socket', 'apiConfig',
     function($scope, timeManager, SFTimerEvents, socket, apiConfig) {
     
-    var commonTimes = [
-        { duration: '6m20s'},
-        { duration: '15m'},
-        { duration: '22m'},
-        { duration: '30m'},
-        { duration: '1h'}
-    ];
-
     $scope.activeTimers = [];
 
     if (Notification.permission != 'granted') {
@@ -22,6 +14,7 @@ angular.module('sfTimer')
     updateTime();
 
     // SOCKET EVENTS
+        /*
     socket.on(apiConfig.socketEvents.TIMER_ADDED, function(data){
         updateTime();
     });
@@ -61,18 +54,19 @@ angular.module('sfTimer')
     $scope.$on(SFTimerEvents.PAUSE_TIMER, function(e, data){
         socket.emit(apiConfig.socketEvents.TIMER_PAUSED, data);
     });
-    
-    $scope.$on(SFTimerEvents.REMOVE_TIMER, function(e, data) {
-        timeManager.removeTimer(data.label)
-            .then(function(){
-                socket.emit(apiConfig.socketEvents.TIMER_REMOVED, data);
-                $scope.activeTimers = doRemoveTimer(data);
-            });
-    });
 
-    $scope.getCommonTimers = function(){
-        return commonTimes;
-    };
+         */
+    $scope.$on(SFTimerEvents.REMOVE_TIMER, function(e, data) {
+        timeManager.removeTimer(data)
+        .then(function(){
+            $scope.activeTimers = _.filter($scope.activeTimers, function(i){
+                return i.id !== data.id;
+            });
+            // push action event onto action log
+        }, function(err){
+            console.log(err);
+        });
+    });
 
     function updateTime(){
         timeManager.getTimes().then(function(times){
@@ -83,7 +77,7 @@ angular.module('sfTimer')
 
             var newItems = _.filter(times, function(t){
                 var exists = _.find($scope.activeTimers, function(timer){
-                    return timer.label ===  t.label;
+                    return timer.id ===  t.id;
                 });
 
                 return !exists
@@ -92,12 +86,6 @@ angular.module('sfTimer')
             _.map(newItems, function(i){
                 $scope.activeTimers.push(i);
             });
-        });
-    }
-
-    function doRemoveTimer(data){
-        return _.filter($scope.activeTimers, function(i){
-            return i.label !== data.label;
         });
     }
 }]);

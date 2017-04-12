@@ -23,8 +23,8 @@ angular.module('sfTimer')
         return $http.post(getResourceUrl('timer/'), data);
     };
 
-    this.removeTimer = function(label) {
-        return $http.delete(getResourceUrl('timer/' + label.replace(' ','_')));
+    this.removeTimer = function(timer) {
+        return $http.delete(getResourceUrl('timer/' + timer.id));
     };
     
     function getResourceUrl(resource){

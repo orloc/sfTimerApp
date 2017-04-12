@@ -12,8 +12,8 @@ angular.module('sfTimer')
         return dataProvider.getAllTimers();
     }
     
-    function removeTimer(label){
-        return dataProvider.removeTimer(label);
+    function removeTimer(timer){
+        return dataProvider.removeTimer(timer);
     }
     
     function createTimer(data){

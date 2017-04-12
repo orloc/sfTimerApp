@@ -50,8 +50,7 @@ angular.module('sfTimer', [
         
     jwtOptionsProvider.config({
         tokenGetter: [ 'store', 'apiConfig', function(store, apiConfig){
-            var token = store.get(apiConfig.tokenStorageName);
-            return token ? token.token : token;
+            return store.get(apiConfig.tokenStorageName);
         }],
         whiteListedDomains: [
             'eqt.dev'
@@ -65,7 +64,11 @@ angular.module('sfTimer', [
 .run(['$rootScope', '$state', 'authManager', 'jwtHelper', 'store', 'apiConfig',
     function($rootScope, $state, authManager, jwtHelper, store, apiConfig){
     authManager.checkAuthOnRefresh();
-        
+
+    $rootScope.$on('tokenHasExpired', function() {
+      alert('Your session has expired!');
+    });
+
     $rootScope.$on('$stateChangeStart', function(e, to){
         var validToken = (function() {
             var token = store.get(apiConfig.tokenStorageName);
