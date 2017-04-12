@@ -7,7 +7,7 @@
   },
   "scripts": {
     "test": "karma start test/karma.conf.js",
-    "postinstall": "bower install && gulp" ,
+    "postinstall": "bower install && gulp",
     "start": "node server.js"
   },
   "dependencies": {
@@ -56,5 +56,8 @@
     "s-build": "symphony-integrations/s-build",
     "symphony-feu": "symphony-snippets/symphony-feu",
     "wiredep": "^2.2.2"
+  },
+  "devDependencies": {
+    "http-proxy-middleware": "^0.17.4"
   }
 }

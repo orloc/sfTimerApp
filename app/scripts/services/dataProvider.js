@@ -2,6 +2,15 @@
 
 angular.module('sfTimer')
 .service('dataProvider', ['$http', 'apiConfig', '$q', function($http, apiConfig, $q){
+    
+    this.login = function(data){
+        return $http.post([apiConfig.baseUrl, 'login'].join('/'), data)
+            .then(function(response) {
+                return $q.resolve(response.data);
+            }, function(err){
+                return $q.reject(err);
+            });
+    };
 
     this.getAllTimers = function(){
         return $http.get(getResourceUrl('timer/'))
