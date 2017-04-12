@@ -6,8 +6,8 @@ angular.module('sfTimer').directive('loginRegister', [ function(){
         scope: {
             inline: '='
         },
-        controller: ['$rootScope','$scope', 'dataProvider',
-            function($rootScope, $scope, dataProvider){
+        controller: ['$rootScope','$scope', '$timeout', 'dataProvider', 'securityManager',
+            function($rootScope, $scope, $timeout, dataProvider, securityManager){
                 $scope.data = {};
 
                 $scope.pages = {
@@ -34,10 +34,12 @@ angular.module('sfTimer').directive('loginRegister', [ function(){
                     $scope.data = {};
                     dataProvider.login(dataCopy)
                         .then(function(res) {
-                            console.log(res);
-                        })
-                        .catch(function(err) {
-                            console.log(err);
+                            securityManager.setLoginTokenAndRedirect(res); 
+                        }, function(err){
+                            $scope.formError = err.data.message;
+                            $timeout(function(){
+                                $scope.formError = null;
+                            }, 3500);
                         });
                 };
 

@@ -1,3 +1,6 @@
+<div ng-if="formError" class="alert alert-danger">
+    {{ formError }}
+</div>
 <form name="loginForm"
       ng-if="pageType == pages.login"
       ng-class="{

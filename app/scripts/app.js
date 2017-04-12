@@ -23,29 +23,30 @@ angular.module('sfTimer', [
 })
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', 'jwtOptionsProvider',
     function ($stateProvider, $urlRouteProvider, $httpProvider, jwtOptionsProvider) {
-    $stateProvider.state('app', {
-        url: '',
+
+    $stateProvider.state({
+        name: 'login',
+        url: '/login',
         templateUrl: 'views/pages/landing.html',
         data: { requireLogin: false }
     });
         
-    $stateProvider.state('app.authed', {
-        abstract: true,
+    $stateProvider.state({
+        name: 'dashboard', 
+        url: '/dashboard',
+        templateUrl: 'views/pages/dashboard.html',
         data: { requireLogin: true }
     });
-
-    $stateProvider.state('app.authed.dashboard', {
-        url: '/dashboard',
-        templateUrl: 'views/pages/dashboard.html'
-    });
         
-    $stateProvider.state('app.authed.user', {
+    $stateProvider.state({
+        name: 'users',  
         url: '/users',
-        templateUrl: 'views/pages/users.html'
+        templateUrl: 'views/pages/users.html',
+        data: { requireLogin: true }
     });
         
         
-    $urlRouteProvider.otherwise('');
+    $urlRouteProvider.otherwise('/login');
         
     jwtOptionsProvider.config({
         tokenGetter: [ 'store', 'apiConfig', function(store, apiConfig){
@@ -61,24 +62,30 @@ angular.module('sfTimer', [
     $httpProvider.interceptors.push('jwtInterceptor');
 
 }])
-.run(['$rootScope', '$state', 'authManager', 'store', 'apiConfig',
-    function($rootScope, $state, authManager, store, apiConfig){
+.run(['$rootScope', '$state', 'authManager', 'jwtHelper', 'store', 'apiConfig',
+    function($rootScope, $state, authManager, jwtHelper, store, apiConfig){
     authManager.checkAuthOnRefresh();
-
+        
     $rootScope.$on('$stateChangeStart', function(e, to){
         var validToken = (function() {
             var token = store.get(apiConfig.tokenStorageName);
             if (!token) return;
+
+            if (jwtHelper.isTokenExpired(token)) return;
+            
+            return token;
         })();
         
-        if (validToken && $rootScope.isAuthed && to.name === 'app'){
-            $state.go('app.authed.dashboard');
-        }
-        
-        if (to.data && to.data.requireLogin ) {
-            $rootScope.isAuthed = validToken
-        } else {
+        if (!validToken){
             $rootScope.isAuthed = false;
+            store.remove(apiConfig.tokenStorageName);
+            $state.go('login');
+        } else {
+            $rootScope.isAuthed = validToken;
+
+            if (to.name === 'login'){
+                $state.go('dashboard');
+            }
         }
 
     });
