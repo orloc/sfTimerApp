@@ -26,7 +26,6 @@ angular.module('sfTimer').directive('customTimerButton', ['timeManager', 'eventB
                 timeManager.createTimer($scope.formData)
                     .then(function(data){
                         $scope.formSuccess = true;
-                        eventBroadcaster.broadcast('eqt-created-timer', data.data);
                         $scope.formData = {};
                         $interval(function(){
                             $scope.formSuccess = false;

@@ -29,15 +29,7 @@ angular.module('sfTimer').directive('timerElement', [function(){
             $scope.timerRunning = false;
             $scope.hasStopped = false;
             $scope.noShake = false;
-            $scope.showNotifications = true;
 
-            $rootScope.$watch('isAuthed', function(val){
-                $scope.hasAuth = val;
-            });
-            
-            $scope.toggleNotifications = function() {
-                $scope.showNotifications = !$scope.showNotifications;
-            };
 
             $scope.$on(timerEvents.TIMER_STOPPED, function (e, val) {
                 $scope.timerRunning = false;
@@ -141,7 +133,7 @@ angular.module('sfTimer').directive('timerElement', [function(){
                     });
                 }
             });
-            
+
             function trimTime(time, lastUnit){
                 var split = time.split(lastUnit);
                 return split.length > 1 ? parseInt(split[1]) : parseInt(split[0]);
