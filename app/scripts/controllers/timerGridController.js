@@ -4,12 +4,6 @@ angular.module('sfTimer')
     function($scope, timeManager, SFTimerEvents) {
     
     $scope.activeTimers = [];
-
-    if (Notification.permission != 'granted') {
-        Notification.requestPermission()
-            .then(function(result){
-            });
-    }
         
     updateTime();
 

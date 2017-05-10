@@ -1,4 +1,4 @@
-<div class="timer" ng-class="{ 'shake-chunk shake-constant shake-constant--hover' : hasStopped && !noShake }" ng-click="acknowledge()">
+<div class="timer">
     <timer countdown="durationSeconds" interval="1000" auto-start="false">
         <div class="inner-timer">
             <div class="header row">
@@ -10,7 +10,12 @@
                 </div>
             </div>
             <div class="progress">
-                <div class="progress-bar pull-left progress-bar-{{status}}"
+                <div class="progress-bar pull-left"
+                     ng-class="{
+                        'progress-bar-success': status === $parent.statuses.BEGUN,
+                        'progress-bar-warning':  status === $parent.statuses.HALF,
+                        'progress-bar-danger':  status === $parent.statuses.ENDING
+                     }"
                      style="min-width: 1em;width: {{progressBar}}%;"></div>
             </div>
             <div class="row timer-body">
@@ -40,9 +45,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div ng-if="hasStopped && !noShake">
-                <span class="text-center muted">Click the timer to STOP the shaking.</span>
             </div>
         </div>
     </timer>

@@ -37,14 +37,23 @@ angular.module('sfTimer', [
         templateUrl: 'views/pages/dashboard.html',
         data: { requireLogin: true }
     });
-        
+
     $stateProvider.state({
         name: 'users',  
         url: '/users',
         templateUrl: 'views/pages/users.html',
+        data: { 
+            requireLogin: true ,
+            admin: true
+        }
+    });
+
+    $stateProvider.state({
+        name: 'groups',
+        url: '/timer-groups',
+        templateUrl: 'views/pages/timerGroups.html',
         data: { requireLogin: true }
     });
-        
         
     $urlRouteProvider.otherwise('/login');
         

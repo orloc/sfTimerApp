@@ -1,4 +1,5 @@
-<form ng-show="isAuthed()" name="customTimerForm"
+<form name="customTimerForm"
+      ng-show="showPanel === true"
       ng-class="{
         'form form-inline': inline
       }"
@@ -10,6 +11,8 @@
     <div ng-show="formError" class="alert alert-danger pull-left">
         <p>{{ formError}}</p>
     </div>
+    <h4>Add Timer</h4>
+    <p class="small">Add a timer where the duration follows the following format: <b>4h20m30s</b></p>
     <div class="form-group">
         <input name="duration"
                type="text"
@@ -28,7 +31,7 @@
                placeholder="Label">
         <button type="submit"
                 ng-disabled="customTimerForm.$invalid"
-                class="btn btn-default btn-sm">
+                class="btn btn-default btn-sm pull-right">
             Create
         </button>
     </div>

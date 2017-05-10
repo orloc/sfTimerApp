@@ -1,29 +1,14 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation" ng-controller="headerCtrl">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <h2>EQ Timers</h2>
     </div>
-    <div class="hidden-xs">
-      <!--
-      <a ng-click="" class="help-link pull-right">
-        <i class="fa fa-question-circle-o "></i>
-      </a>
-      <custom-timer-button
-              needs-auth="true"
-              inline="true"
-              class="pull-right">
-      </custom-timer-button>
-      -->
-    </div>
 
-    <!--
-    <ul class="help">
-      <li>Duration Format should be as follows e.g.<br>
-        <span class="small">7h34m43s</span>
-      </li>
-    </ul>
-    -->
+    <a ng-click=""  ng-show="isAuthed" class="help-link pull-right" style="display: inline">
+        <i class="fa fa-question-circle-o "></i>
+    </a>
+
   </div>
   <!-- /.container -->
 </nav>
