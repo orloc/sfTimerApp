@@ -8,6 +8,8 @@
 
 
 
+
+
 html, body {
   color: $fontC;
   background: url(../images/bg.jpg) no-repeat center center fixed;
@@ -26,14 +28,9 @@ html, body {
   left: 0;
 }
 
-.main-view {
-  margin-top: 75px;
-}
-
 .container {
   max-width: 1680px;
 }
-
 
 button.btn.btn-primary {
 

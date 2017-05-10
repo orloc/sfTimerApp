@@ -61,36 +61,41 @@ angular.module('sfTimer', [
     $httpProvider.interceptors.push('jwtInterceptor');
 
 }])
-.run(['$rootScope', '$state', 'authManager', 'jwtHelper', 'store', 'apiConfig',
-    function($rootScope, $state, authManager, jwtHelper, store, apiConfig){
+.run(['$rootScope', '$state', 'authManager', 'jwtHelper', 'store', 'apiConfig', '$location',
+    function($rootScope, $state, authManager, jwtHelper, store, apiConfig, $location){
     authManager.checkAuthOnRefresh();
+        
+    var getValidToken = function(){
+        var token = store.get(apiConfig.tokenStorageName);
+        if (!token) return;
+
+        if (jwtHelper.isTokenExpired(token)) return;
+
+        return token;
+    };
+        
+    if (!getValidToken()) {
+        $location.path('/login');
+    }
 
     $rootScope.$on('tokenHasExpired', function() {
-      alert('Your session has expired!');
+        alert('Your session has expired!');
+        $state.go('login');
     });
 
     $rootScope.$on('$stateChangeStart', function(e, to){
-        var validToken = (function() {
-            var token = store.get(apiConfig.tokenStorageName);
-            if (!token) return;
+        if (to.data && to.data.requireLogin){
+            var validToken = getValidToken();
 
-            if (jwtHelper.isTokenExpired(token)) return;
-            
-            return token;
-        })();
-        
-        if (!validToken){
-            $rootScope.isAuthed = false;
-            store.remove(apiConfig.tokenStorageName);
-            $state.go('login');
-        } else {
-            $rootScope.isAuthed = validToken;
+            if (!validToken){
+                $rootScope.isAuthed = false;
+                store.remove(apiConfig.tokenStorageName);
 
-            if (to.name === 'login'){
-                $state.go('dashboard');
+                $state.go('login');
+            } else {
+                $rootScope.isAuthed = validToken;
             }
         }
-
     });
 }]);
 

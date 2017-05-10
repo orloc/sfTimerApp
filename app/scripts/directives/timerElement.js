@@ -20,12 +20,6 @@ angular.module('sfTimer').directive('timerElement', [function(){
                 TICK: 'timer-tick'
             };
             
-            var statuses = {
-                BEGUN: 'info',
-                HALF: 'warning',
-                ENDING: 'danger'
-            };
-
             function trimTime(time, lastUnit){
                 var split = time.split(lastUnit);
                 return split.length > 1 ? parseInt(split[1]) : parseInt(split[0]);
@@ -68,10 +62,19 @@ angular.module('sfTimer').directive('timerElement', [function(){
             $scope.durationSeconds = desiredTime.diff(localConfig.start_time, 'seconds');
             $scope.timerRunning = false;
             $scope.hasStopped = false;
+            $scope.isPaused = false;
             $scope.noShake = false;
+            $scope.status = null;
+
+            $scope.statuses = {
+                BEGUN: 1,
+                HALF: 2,
+                ENDING: 3
+            };
 
             $scope.$on(timerEvents.TIMER_STOPPED, function (e, val) {
                 $scope.timerRunning = false;
+                $scope.isPaused = false;
                 $scope.hasStopped = true;
                 $scope.noShake = false;
                 
@@ -94,7 +97,9 @@ angular.module('sfTimer').directive('timerElement', [function(){
             });
 
             $scope.$on(timerEvents.TICK, function (event, data) {
+                var statuses = $scope.statuses;
                 var percentDone = Math.floor((data.millis / ($scope.durationSeconds * 1000)) * 100);
+
                 if (percentDone === 100) return statuses.BEGUN;
                 
                 $scope.status = (function(){
@@ -102,21 +107,26 @@ angular.module('sfTimer').directive('timerElement', [function(){
                     if (percentDone < 50 && percentDone > 15) return statuses.HALF;
                     return statuses.ENDING;
                 })();
+                
+                console.log($scope.status);
             });
 
             $scope.pause = function(){
                 $scope.$broadcast(timerEvents.STOP);
+                $scope.isPaused = true;
                 $scope.timerRunning = false;
             };
 
             $scope.start = function(){
                 $scope.timerRunning = true;
+                $scope.isPaused = false;
                 $scope.$broadcast(timerEvents.START);
             };
 
             $scope.resetTimer = function(){
                 $scope.$broadcast(timerEvents.RESET);
                 $scope.timerRunning = false;
+                $scope.isPaused = false;
             };
 
             
