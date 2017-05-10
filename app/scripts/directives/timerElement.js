@@ -73,10 +73,12 @@ angular.module('sfTimer').directive('timerElement', [function(){
             };
 
             $scope.$on(timerEvents.TIMER_STOPPED, function (e, val) {
-                $scope.timerRunning = false;
-                $scope.isPaused = false;
-                $scope.hasStopped = true;
-                $scope.noShake = false;
+                $scope.$apply(function(){
+                    $scope.timerRunning = false;
+                    $scope.isPaused = false;
+                    $scope.hasStopped = true;
+                    $scope.noShake = false;
+                });
                 
                 /*
                 webNotification.showNotification('Timer Expired!', {
@@ -101,14 +103,12 @@ angular.module('sfTimer').directive('timerElement', [function(){
                 var percentDone = Math.floor((data.millis / ($scope.durationSeconds * 1000)) * 100);
 
                 if (percentDone === 100) return statuses.BEGUN;
-                
+
                 $scope.status = (function(){
                     if (percentDone >= 50) return statuses.BEGUN;
                     if (percentDone < 50 && percentDone > 15) return statuses.HALF;
                     return statuses.ENDING;
                 })();
-                
-                console.log($scope.status);
             });
 
             $scope.pause = function(){
@@ -139,11 +139,6 @@ angular.module('sfTimer').directive('timerElement', [function(){
                     return Math.floor(time/60)+'m'+(time%60)+'s';
                 }
                 return time%60+'s';
-            };
-
-            $scope.acknowledge = function(){
-                if (!$scope.hasStopped) return;
-                $scope.noShake = true;
             };
         }]
     };

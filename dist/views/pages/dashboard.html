@@ -3,7 +3,9 @@
     <div class="col-sm-12 grid">
         <div class="row" ng-controller="timerGridCtrl">
             <h4 ng-if="!activeTimers.length" class="text-center muted no-timers">No Timers</h4>
-            <timer-element ng-repeat="timer in activeTimers" timer-config="timer"></timer-element>
+            <timer-element
+                    class="col-sm-4 col-md-3"
+                    ng-repeat="timer in activeTimers" timer-config="timer"></timer-element>
         </div>
     </div>
     <div class="col-sm-6 active-members">

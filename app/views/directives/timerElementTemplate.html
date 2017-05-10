@@ -1,4 +1,4 @@
-<div class="timer" ng-class="{ 'shake-chunk shake-constant shake-constant--hover' : hasStopped && !noShake }" ng-click="acknowledge()">
+<div class="timer">
     <timer countdown="durationSeconds" interval="1000" auto-start="false">
         <div class="inner-timer">
             <div class="header row">
@@ -45,9 +45,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div ng-if="hasStopped && !noShake">
-                <span class="text-center muted">Click the timer to STOP the shaking.</span>
             </div>
         </div>
     </timer>
