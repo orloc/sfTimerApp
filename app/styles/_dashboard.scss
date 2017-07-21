@@ -1,5 +1,24 @@
-.no-timers {
-  margin-top: 5em;
+.timer-grid{
+  .timer-groups{
+    label {
+      padding: 5px;
+      font-size: 12px;
+      margin: 5px;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 0.6;
+      }
+
+      &.active {
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .no-timers {
+    margin-top: 5em;
+  }
 }
 
 

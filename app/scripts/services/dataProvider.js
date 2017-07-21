@@ -12,8 +12,8 @@ angular.module('sfTimer')
             });
     };
 
-    this.getAllTimers = function(){
-        return $http.get(getResourceUrl('timer/'))
+    this.getTimerGroups = function(){
+        return $http.get(getResourceUrl('timer-group'))
             .then(function (response) {
                 return $q.resolve(response.data); 
             });
@@ -30,6 +30,4 @@ angular.module('sfTimer')
     function getResourceUrl(resource){
         return [apiConfig.baseUrl, apiConfig.apiVersion, resource].join('/');
     }
-    
-    
 }]);

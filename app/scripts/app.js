@@ -32,9 +32,9 @@ angular.module('sfTimer', [
     });
         
     $stateProvider.state({
-        name: 'dashboard', 
-        url: '/dashboard',
-        templateUrl: 'views/pages/dashboard.html',
+        name: 'spawns', 
+        url: '/spawns',
+        templateUrl: 'views/pages/spawns.html',
         data: { requireLogin: true }
     });
 
@@ -49,9 +49,9 @@ angular.module('sfTimer', [
     });
 
     $stateProvider.state({
-        name: 'groups',
-        url: '/timer-groups',
-        templateUrl: 'views/pages/timerGroups.html',
+        name: 'timers',
+        url: '/timers',
+        templateUrl: 'views/pages/timers.html',
         data: { requireLogin: true }
     });
         
@@ -70,20 +70,11 @@ angular.module('sfTimer', [
     $httpProvider.interceptors.push('jwtInterceptor');
 
 }])
-.run(['$rootScope', '$state', 'authManager', 'jwtHelper', 'store', 'apiConfig', '$location',
-    function($rootScope, $state, authManager, jwtHelper, store, apiConfig, $location){
+.run(['$rootScope', '$state', 'authManager', '$location','securityManager',
+    function($rootScope, $state, authManager, $location, securityManager){
     authManager.checkAuthOnRefresh();
-        
-    var getValidToken = function(){
-        var token = store.get(apiConfig.tokenStorageName);
-        if (!token) return;
 
-        if (jwtHelper.isTokenExpired(token)) return;
-
-        return token;
-    };
-        
-    if (!getValidToken()) {
+    if (!securityManager.getValidToken()) {
         $location.path('/login');
     }
 
@@ -94,13 +85,10 @@ angular.module('sfTimer', [
 
     $rootScope.$on('$stateChangeStart', function(e, to){
         if (to.data && to.data.requireLogin){
-            var validToken = getValidToken();
+            var validToken = securityManager.getValidToken();
 
             if (!validToken){
-                $rootScope.isAuthed = false;
-                store.remove(apiConfig.tokenStorageName);
-
-                $state.go('login');
+                securityManager.logout();
             } else {
                 $rootScope.isAuthed = validToken;
             }

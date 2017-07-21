@@ -5,9 +5,15 @@
       <h2>EQ Timers</h2>
     </div>
 
-    <a ng-click=""  ng-show="isAuthed" class="help-link pull-right" style="display: inline">
+    <div class="pull-right"
+         ng-show="isAuthed">
+
+      Logged in as: <strong>{{ currentUser.username }}</strong>
+      <a ng-click="logout()">Logout</a>
+      <a ng-click=""  class="help-link" style="display: inline">
         <i class="fa fa-question-circle-o "></i>
-    </a>
+      </a>
+    </div>
 
   </div>
   <!-- /.container -->

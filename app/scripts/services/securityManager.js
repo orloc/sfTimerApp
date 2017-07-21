@@ -6,7 +6,16 @@ angular.module('sfTimer')
 
             this.setLoginTokenAndRedirect = function(token){
                 store.set(apiConfig.tokenStorageName, token.token);
-                $state.go('dashboard');
+                $state.go('timers');
+            };
+
+            this.getValidToken = function(){
+                var token = store.get(apiConfig.tokenStorageName);
+                if (!token) return;
+
+                if (jwtHelper.isTokenExpired(token)) return;
+
+                return token;
             };
             
             this.getCurrentUser = function(){

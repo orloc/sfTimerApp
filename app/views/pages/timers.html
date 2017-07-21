@@ -1,0 +1,23 @@
+<!-- Page Content -->
+<div class="timer-grid" ng-controller="timerGridCtrl">
+    <div class="row">
+        <div class="col-xs-12 timer-groups">
+            <label class="label label-info"
+                   ng-click="selectGroup(group)"
+                   ng-repeat="group in groups">
+                {{ group.name }}
+            </label>
+
+        </div>
+        <div class="col-sm-3">
+            <custom-timer-form></custom-timer-form>
+        </div>
+        <div class="col-sm-9 grid">
+            <h4 ng-if="!activeTimers.length" class="text-center muted no-timers">No Timers</h4>
+            <timer-element
+                    class="col-sm-4 col-md-3"
+                    ng-repeat="timer in activeTimers" timer-config="timer"></timer-element>
+        </div>
+    </div>
+</div>
+

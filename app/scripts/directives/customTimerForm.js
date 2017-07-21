@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('sfTimer').directive('customTimerForm', ['timeManager', 'eventBroadcaster', '$interval', function(timeManager, eventBroadcaster, $interval){
+angular.module('sfTimer').directive('customTimerForm', ['dataProvider', 'eventBroadcaster', '$interval', 
+    function(dataProvider, eventBroadcaster, $interval){
     return {
         templateUrl: 'views/directives/customTimerFormTemplate.html',
         scope: {
@@ -11,18 +12,13 @@ angular.module('sfTimer').directive('customTimerForm', ['timeManager', 'eventBro
             $scope.durationPattern = /^(([1-5]?[0-9]){1,2}[h|m|s]){1,3}$/img;
             $scope.formData = {};
             
-            $scope.showPanel = false;
             $scope.formError = null;
             $scope.formSuccess = null;
             
-            $scope.$on('newTimerToggle', function(e, v){
-                $scope.showPanel = v;
-            });
-
             $scope.submit= function(){
                 $scope.formError = null;
                 $scope.formSuccess = null;
-                timeManager.createTimer($scope.formData)
+                dataProvider.createTimer($scope.formData)
                     .then(function(data){
                         $scope.formSuccess = true;
                         $scope.formData = {};
