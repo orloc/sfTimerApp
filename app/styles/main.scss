@@ -30,22 +30,6 @@ body {
   left: 0;
 }
 
-button.btn.btn-primary {
-  background-color: #85522D;
-  color: $lightB;
-  &:disabled {
-    &:hover {
-      background-color: #85522D;
-      color: $lightB;
-    }
-    opacity: 0.4;
-  }
-  &:hover {
-    background-color: $lightB;
-    color: $fontC;
-  }
-}
-
 .socket-connection {
   position: absolute;
   top:0;

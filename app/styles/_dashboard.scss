@@ -2,6 +2,7 @@
   .timer-groups{
     label {
       padding: 5px;
+      display: inline-block;
       font-size: 12px;
       margin: 5px;
 
@@ -13,6 +14,13 @@
       &.active {
         opacity: 0.6;
       }
+    }
+  }
+
+  .side-menu {
+    .middle {
+      text-align: center;
+      margin-top: 40%;
     }
   }
 
