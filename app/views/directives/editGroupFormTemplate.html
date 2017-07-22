@@ -1,0 +1,28 @@
+<form name="editGroupForm"
+      ng-class="{
+        'form form-inline': inline
+      }"
+      ng-submit="submit()">
+    <h4>Edit Group</h4>
+    <div class="form-group">
+        <input name="name"
+               type="text"
+               required
+               ng-model="formData.name"
+               class="form-control"
+               placeholder="Name">
+    </div>
+    <div class="form-group">
+        <input name="description"
+               required
+               ng-model="formData.description"
+               type="text"
+               class="form-control"
+               placeholder="Description">
+        <button type="submit"
+                ng-disabled="editGroupForm.$invalid"
+                class="btn btn-default btn-block">
+            Update
+        </button>
+    </div>
+</form>

@@ -1,15 +1,22 @@
 
 angular.module('sfTimer')
-.controller('timerGridCtrl', ['$scope', 'dataProvider', 'SFTimerEvents',
-    function($scope, dataProvider, SFTimerEvents) {
+.controller('timerGridCtrl', ['$scope', 'dataProvider', 'SFTimerEvents','eventBroadcaster',
+    function($scope, dataProvider, SFTimerEvents, eventBroadcaster) {
     
     $scope.activeTimers = [];
     $scope.groups = [];
         
     $scope.activeGroup = null;
+    $scope.activeForm = false;
+    $scope.forms = {
+        editGroup: 'editGroup',
+        addTimer: 'addTimer',
+        deleteGroup: 'deleteGroup'
+    };
         
     updateTime();
 
+        /// should this still be here??
     $scope.$on(SFTimerEvents.REMOVE_TIMER, function(e, data) {
         dataProvider.removeTimer(data)
         .then(function(){
@@ -20,11 +27,22 @@ angular.module('sfTimer')
             console.log(err);
         });
     });
-
+        
+    $scope.$on(eventBroadcaster.event.form.close, function(e, data){
+        $scope.activeForm = null;
+    });
+        
+    $scope.toggleShowAdd = function(){
+        $scope.showAddTimer = !$scope.showAddTimer;   
+    };
     $scope.selectGroup = function(group){
         if($scope.activeGroup === null || group.id !== $scope.activeGroup.id){
             $scope.activeGroup = group;
         }    
+    };
+
+    $scope.toggleForm = function(group){
+        $scope.activeForm = group;
     };
         
     function updateTime(){

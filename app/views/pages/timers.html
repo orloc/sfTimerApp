@@ -7,8 +7,21 @@
             </div>
             <h4 ng-show="activeGroup !== null">{{ activeGroup.name}}</h4>
             <p class="small muted">{{ activeGroup.description }}</p>
-            <custom-timer-form ng-show="activeGroup !== null"></custom-timer-form>
+
+
+            <div class="bottom-settings" ng-show="activeGroup !== null">
+                <custom-timer-form ng-show="activeForm == forms.addTimer "></custom-timer-form>
+                <edit-group-form ng-if="activeForm === forms.editGroup " existing-group="activeGroup"></edit-group-form>
+                <delete-group-form ng-if="activeForm === forms.deleteGroup " existing-group="activeGroup"></delete-group-form>
+                <div class="btn-group" ng-hide="activeForm === true">
+                    <button ng-click="toggleForm(forms.addTimer)"  class="btn btn-small btn-info">Add Timer</button>
+                    <button ng-click="toggleForm(forms.editGroup)" class="btn btn-small btn-warning">Edit Group</button>
+                    <button ng-click="toggleForm(forms.deleteGroup)" class="btn btn-small btn-danger">Delete Group</button>
+                </div>
+            </div>
         </div>
+
+        <!-- Grid Section -->
         <div class="col-sm-9 grid">
             <div class="row timer-groups">
                 <label class="label label-info"

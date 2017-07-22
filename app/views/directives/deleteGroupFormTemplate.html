@@ -1,0 +1,17 @@
+<form name="deleteGroupForm"
+      ng-class="{
+        'form form-inline': inline
+      }"
+      ng-submit="submit()">
+    <h4>ARE YOU SURE?</h4>
+    <p class="small muted">Deleting a group deletes ALL its timers</p>
+    <button type="submit"
+            class="btn btn-danger btn-block">
+        Confirm
+    </button>
+    <button type="button"
+            ng-click="cancel()"
+            class="btn btn-primary btn-block">
+        Cancel
+    </button>
+</form>
