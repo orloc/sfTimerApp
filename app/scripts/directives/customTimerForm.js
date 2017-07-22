@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sfTimer').directive('customTimerForm', ['dataProvider', 'eventBroadcaster', '$interval', 
-    function(dataProvider, eventBroadcaster, $interval){
+    function(dataProvider, eventBroadcaster){
     return {
         templateUrl: 'views/directives/customTimerFormTemplate.html',
         scope: {
@@ -13,18 +13,14 @@ angular.module('sfTimer').directive('customTimerForm', ['dataProvider', 'eventBr
             $scope.formData = {};
             
             $scope.formError = null;
-            $scope.formSuccess = null;
-            
+
             $scope.submit= function(){
                 $scope.formError = null;
                 $scope.formSuccess = null;
                 dataProvider.createTimer($scope.formData)
                     .then(function(data){
-                        $scope.formSuccess = true;
                         $scope.formData = {};
-                        $interval(function(){
-                            $scope.formSuccess = false;
-                        },2000,1);
+                        eventBroadcaster.broadcast(eventBroadcaster.event.form.close);
                     }, function(err){
                         $scope.formError = err.data.message;
                     });

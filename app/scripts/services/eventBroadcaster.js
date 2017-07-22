@@ -5,6 +5,9 @@ angular.module('sfTimer')
         this.event = {
             form: {
                 close: 'event:form:close'
+            },
+            timerGroup: {
+                selected: 'event:timerGroup:selected'
             }
         };
         

@@ -1,45 +1,43 @@
 <!-- Page Content -->
-<div class="timer-grid" ng-controller="timerGridCtrl">
-    <div class="row">
-        <div class="col-sm-3 side-menu">
-            <div ng-show="activeGroup === null">
-                <h3 class="middle">Select or Add a group to proceed</h3>
-            </div>
-            <h4 ng-show="activeGroup !== null">{{ activeGroup.name}}</h4>
-            <p class="small muted">{{ activeGroup.description }}</p>
+<div class="row">
+    <div class="col-sm-3 side-menu" ng-controller="sideBarCtrl">
+        <div class="row timer-groups">
+            <label class="label label-info"
+                   ng-class='{
+                     "active": activeGroup !== null && activeGroup.id === group.id
+                   }'
+                   ng-click="selectGroup(group)"
+                   ng-repeat="group in groups">
+                {{ group.name }}
+            </label>
+
+            <button class="btn btn-block btn-default">Add group</button>
+        </div>
+        <div ng-show="activeGroup === null">
+            <h3 class="middle">Select or Add a group to proceed</h3>
+        </div>
+        <h4 ng-show="activeGroup !== null">{{ activeGroup.name}}</h4>
+        <p class="small muted">{{ activeGroup.description }}</p>
 
 
-            <div class="bottom-settings" ng-show="activeGroup !== null">
-                <custom-timer-form ng-show="activeForm == forms.addTimer "></custom-timer-form>
-                <edit-group-form ng-if="activeForm === forms.editGroup " existing-group="activeGroup"></edit-group-form>
-                <delete-group-form ng-if="activeForm === forms.deleteGroup " existing-group="activeGroup"></delete-group-form>
-                <div class="btn-group" ng-hide="activeForm === true">
-                    <button ng-click="toggleForm(forms.addTimer)"  class="btn btn-small btn-info">Add Timer</button>
-                    <button ng-click="toggleForm(forms.editGroup)" class="btn btn-small btn-warning">Edit Group</button>
-                    <button ng-click="toggleForm(forms.deleteGroup)" class="btn btn-small btn-danger">Delete Group</button>
-                </div>
+        <div class="bottom-settings col-sm-3" ng-show="activeGroup !== null">
+            <custom-timer-form ng-show="activeForm == forms.addTimer "></custom-timer-form>
+            <add-edit-group-form ng-if="activeForm === forms.editGroup " existing-group="activeGroup"></add-edit-group-form>
+            <delete-group-form ng-if="activeForm === forms.deleteGroup " existing-group="activeGroup"></delete-group-form>
+            <div class="btn-group" ng-hide="activeForm === true">
+                <button ng-click="toggleForm(forms.addTimer)"  class="btn btn-small btn-info">Add Timer</button>
+                <button ng-click="toggleForm(forms.editGroup)" class="btn btn-small btn-warning">Edit Group</button>
+                <button ng-click="toggleForm(forms.deleteGroup)" class="btn btn-small btn-danger">Delete Group</button>
             </div>
         </div>
+    </div>
 
-        <!-- Grid Section -->
-        <div class="col-sm-9 grid">
-            <div class="row timer-groups">
-                <label class="label label-info"
-                       ng-class='{
-                         "active": activeGroup !== null && activeGroup.id === group.id
-                       }'
-                       ng-click="selectGroup(group)"
-                       ng-repeat="group in groups">
-                    {{ group.name }}
-                </label>
-
-                <button class="btn btn-small btn-primary pull-right"><i class="fa fa-plus"></i> Add group</button>
-            </div>
-            <h4 ng-if="!activeTimers.length && activeGroup !== null" class="text-center muted no-timers">No Timers</h4>
-            <timer-element
-                    class="col-sm-4 col-md-3"
-                    ng-repeat="timer in activeTimers" timer-config="timer"></timer-element>
-        </div>
+    <!-- Grid Section -->
+    <div class="col-sm-9 timer-grid" ng-controller="timerGridCtrl">
+        <h4 ng-if="!activeTimers.length && activeGroup !== null" class="text-center muted no-timers">No Timers</h4>
+        <timer-element
+                class="col-sm-4 col-md-3"
+                ng-repeat="timer in activeTimers" timer-config="timer"></timer-element>
     </div>
 </div>
 

@@ -1,14 +1,17 @@
 'use strict';
 
 angular.module('sfTimer')
-    .directive('editGroupForm', ['dataProvider', 'eventBroadcaster', '$interval',
+    .directive('addEditGroupForm', ['dataProvider', 'eventBroadcaster', '$interval',
     function(dataProvider, eventBroadcaster, $interval){
     return {
         templateUrl: 'views/directives/editGroupFormTemplate.html',
         scope: {
-            existingGroup: '='
+            existingGroup: '=',
+            createForm: '='
         }, 
         link: function(scope, element, attr){
+            var isCreate = scope.createForm || false;
+            scope.title = isCreate ? 'New' : 'Edit';
             scope.formData = scope.existingGroup;
             scope.formError = null;
             scope.formSuccess = null;
