@@ -23,7 +23,8 @@ angular.module('sfTimer')
         
     $scope.$watch('activeGroup', function(val){
         if (!val) return;
-        eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.selected, val);        
+        eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.selected, val);
+        eventBroadcaster.broadcast(eventBroadcaster.event.form.close);
     });
         
     $scope.toggleShowAdd = function(){

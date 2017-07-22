@@ -7,7 +7,7 @@ angular.module('sfTimer')
         
     $scope.$on(SFTimerEvents.REMOVE_TIMER, function(e, data) {
         if ($scope.activeGroup === null) return; 
-        dataProvider.removeTimer($scope.activeGroup, data)
+        dataProvider.removeTimer(data)
         .then(function(){
             $scope.activeTimers = _.filter($scope.activeTimers, function(i){
                 return i.id !== data.id;
@@ -15,6 +15,10 @@ angular.module('sfTimer')
         }, function(err){
             console.log(err);
         });
+    });
+
+    $scope.$on(eventBroadcaster.event.timer.created, function(event, val){
+        $scope.activeTimers.push(val); 
     });
         
     $scope.$on(eventBroadcaster.event.timerGroup.selected, function(event, val){

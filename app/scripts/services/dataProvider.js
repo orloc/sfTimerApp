@@ -25,11 +25,12 @@ angular.module('sfTimer')
     };
     
     this.createTimer = function(data) {
-        return $http.post(getResourceUrl('timer/'), data);
+        var path = ['timer-group', data.timer_group_id, 'timer'].join('/');
+        return $http.post(getResourceUrl(path), data);
     };
 
-    this.removeTimer = function(group, timer) {
-        var path = ['timer-group', group.id, 'timer', timer.id].join('/');
+    this.removeTimer = function(timer) {
+        var path = ['timer-group', timer.timer_group_id, 'timer', timer.id].join('/');
         return $http.delete(getResourceUrl(path));
     };
     
