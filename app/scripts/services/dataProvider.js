@@ -18,13 +18,19 @@ angular.module('sfTimer')
                 return $q.resolve(response.data); 
             });
     };
+
+    this.getTimersByGroup = function(group){
+        var path = ['timer-group', group.id, 'timer'].join('/');
+        return $http.get(getResourceUrl(path));
+    };
     
     this.createTimer = function(data) {
         return $http.post(getResourceUrl('timer/'), data);
     };
 
-    this.removeTimer = function(timer) {
-        return $http.delete(getResourceUrl('timer/' + timer.id));
+    this.removeTimer = function(group, timer) {
+        var path = ['timer-group', group.id, 'timer', timer.id].join('/');
+        return $http.delete(getResourceUrl(path));
     };
     
     function getResourceUrl(resource){

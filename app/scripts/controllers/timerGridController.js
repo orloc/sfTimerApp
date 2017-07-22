@@ -18,7 +18,8 @@ angular.module('sfTimer')
 
         /// should this still be here??
     $scope.$on(SFTimerEvents.REMOVE_TIMER, function(e, data) {
-        dataProvider.removeTimer(data)
+        if ($scope.activeGroup === null) return; 
+        dataProvider.removeTimer($scope.activeGroup, data)
         .then(function(){
             $scope.activeTimers = _.filter($scope.activeTimers, function(i){
                 return i.id !== data.id;
@@ -30,6 +31,15 @@ angular.module('sfTimer')
         
     $scope.$on(eventBroadcaster.event.form.close, function(e, data){
         $scope.activeForm = null;
+    });
+        
+    $scope.$watch('activeGroup', function(val){
+        if (!val) return;
+        dataProvider.getTimersByGroup(val)
+            .then(function(response){
+                $scope.activeTimers = response.data;
+        });
+        
     });
         
     $scope.toggleShowAdd = function(){
