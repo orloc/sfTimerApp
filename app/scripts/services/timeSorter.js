@@ -4,7 +4,7 @@ angular.module('sfTimer')
 .service('timeSorter', ['$rootScope', 'eventBroadcaster', function($rootScope, eventBroadcaster){
     var activeTimes = [];
     var seen = {};
-
+    
     $rootScope.$on(eventBroadcaster.event.timer.tick, function(e, val){
         if (typeof seen[val.timer.id] === 'undefined'){
             insert(val, activeTimes);

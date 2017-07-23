@@ -125,6 +125,7 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
             };
 
             scope.resetTimer = function(){
+                eventBroadcaster.broadcast(eventBroadcaster.event.timer.reset, localConfig);
                 scope.$broadcast(timerEvents.RESET);
                 scope.timerRunning = false;
                 scope.hasStopped = false;
