@@ -8,6 +8,11 @@ angular.module('sfTimer')
     $rootScope.$on(eventBroadcaster.event.timer.delete, function(e, val) {
         remove( { timer: val }, activeTimes);
     });
+
+    $rootScope.$on(eventBroadcaster.event.timerGroup.selected, function() {
+        activeTimes = [];
+        seen = {};
+    });
     
     $rootScope.$on(eventBroadcaster.event.timer.tick, function(e, val){
         if (typeof seen[val.timer.id] === 'undefined'){
