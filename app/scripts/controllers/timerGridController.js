@@ -7,8 +7,15 @@ angular.module('sfTimer')
 
     $interval(function(){
         if (!$scope.activeTimers.length) return;
-         
-    }, 1000 * 3);
+        var activeTimers = timerSorter.getTimes();
+        var ids = activeTimers.map(function(i) {
+            return i.id;
+        });
+        
+        $scope.activeTimers = activeTimers.concat($scope.activeTimers.filter(function(i){
+            return ids.indexOf(i.id) === -1;  
+        }));
+    }, 1000);
         
     $scope.$on(eventBroadcaster.event.timer.delete, function(e, data) {
         if ($scope.activeGroup === null) return; 

@@ -13,6 +13,12 @@ angular.module('sfTimer')
         update(val, activeTimes);
     });
     
+    this.getTimes = function(){
+        return activeTimes.map(function(i) {
+            return i.timer;
+        });   
+    };
+    
     function update(val, arr){
         var timeIndex = _.findIndex(arr, function(i){
             return i.timer.id === val.timer.id;
