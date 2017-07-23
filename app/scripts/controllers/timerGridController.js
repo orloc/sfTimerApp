@@ -40,11 +40,40 @@ angular.module('sfTimer')
     });
 
     $scope.$on(eventBroadcaster.event.timer.started, function(event, val){
-        // post to the timer to start it
+        if (!val) return;
+        val.running = true;
+        val.start_time = moment().unix();
+        dataProvider.updateTimer(val)
+            .then(function(data){
+                // ? 
+            }, function(err){
+                console.log(err);
+            });
     });
 
     $scope.$on(eventBroadcaster.event.timer.paused, function(event, val){
-        // post to the timer to pause it
+        if (!val) return;
+        val.running = false;
+        val.last_tick = moment().unix();
+        dataProvider.updateTimer(val)
+            .then(function(data){
+                // ? 
+            }, function(err){
+                console.log(err);
+            });
+    });
+
+    $scope.$on(eventBroadcaster.event.timer.reset,function(event, val){
+        if (!val) return;
+        val.running = false;
+        val.last_tick = null;
+        val.start_time = null;
+        dataProvider.updateTimer(val)
+            .then(function(data){
+                // ? 
+            }, function(err){
+                console.log(err);
+            });
     });
 
     $scope.$on(eventBroadcaster.event.timerGroup.delete, function(){

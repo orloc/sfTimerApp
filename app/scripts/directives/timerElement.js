@@ -9,7 +9,9 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
         controller: ['$scope', function($scope){
             var localConfig = $scope.timerConfig;
             var momentDuration = getDuration(localConfig.duration);
-            var desiredTime = moment(localConfig.start_time).add(momentDuration);
+            var initialTime = localConfig.start_time ? moment(localConfig.start_time): moment();
+            var desiredTime = initialTime.add(momentDuration);
+            
             
             function trimTime(time, lastUnit){
                 var split = time.split(lastUnit);
@@ -50,7 +52,7 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
                 }, {}));
             }
             
-            $scope.durationSeconds = desiredTime.diff(localConfig.start_time, 'seconds');
+            $scope.durationSeconds = desiredTime.diff(moment(), 'seconds');
 
             $scope.statuses = {
                 BEGUN: 1,

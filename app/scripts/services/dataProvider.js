@@ -19,6 +19,7 @@ angular.module('sfTimer')
             });
     };
     
+    // Groups
     this.updateTimerGroup = function(group, data){
         var path = ['timer-group', group.id].join('/');
         return $http.patch(getResourceUrl(path), data);
@@ -38,9 +39,15 @@ angular.module('sfTimer')
         return $http.get(getResourceUrl(path));
     };
     
+    // Timers
     this.createTimer = function(data) {
         var path = ['timer-group', data.timer_group_id, 'timer'].join('/');
         return $http.post(getResourceUrl(path), data);
+    };
+    
+    this.updateTimer = function(data){
+        var path = ['timer-group', data.timer_group_id, 'timer', data.id].join('/');
+        return $http.patch(getResourceUrl(path), data);
     };
 
     this.removeTimer = function(timer) {
