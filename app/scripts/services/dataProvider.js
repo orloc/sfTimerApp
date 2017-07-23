@@ -18,11 +18,6 @@ angular.module('sfTimer')
                 return $q.resolve(response.data); 
             });
     };
-
-    this.getTimersByGroup = function(group){
-        var path = ['timer-group', group.id, 'timer'].join('/');
-        return $http.get(getResourceUrl(path));
-    };
     
     this.updateTimerGroup = function(group, data){
         var path = ['timer-group', group.id].join('/');
@@ -31,6 +26,16 @@ angular.module('sfTimer')
 
     this.createTimerGroup = function(data){
         return $http.post(getResourceUrl('timer-group'), data);
+    };
+    
+    this.deleteTimerGroup = function(group){
+        var path = ['timer-group', group.id].join('/');
+        return $http.delete(getResourceUrl(path));
+    };
+
+    this.getTimersByGroup = function(group){
+        var path = ['timer-group', group.id, 'timer'].join('/');
+        return $http.get(getResourceUrl(path));
     };
     
     this.createTimer = function(data) {

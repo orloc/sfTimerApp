@@ -12,7 +12,8 @@ angular.module('sfTimer')
             timerGroup: {
                 selected: 'event:timerGroup:selected',
                 update: 'event:timerGroup:update',
-                create: 'event:timerGroup:create'
+                create: 'event:timerGroup:create',
+                delete: 'event:timerGroup:delete'
             }
         };
         

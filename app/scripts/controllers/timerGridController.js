@@ -20,6 +20,10 @@ angular.module('sfTimer')
     $scope.$on(eventBroadcaster.event.timer.created, function(event, val){
         $scope.activeTimers.push(val); 
     });
+
+    $scope.$on(eventBroadcaster.event.timerGroup.delete, function(e, data){
+        $scope.activeTimers = [];
+    });
         
     $scope.$on(eventBroadcaster.event.timerGroup.selected, function(event, val){
         dataProvider.getTimersByGroup(val)

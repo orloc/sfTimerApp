@@ -9,10 +9,14 @@ angular.module('sfTimer')
             existingGroup: '='
         }, 
         link: function(scope, element, attr){
-            scope.formData = scope.existingGroup;
-
             scope.submit= function(){
-                eventBroadcaster.broadcast(eventBroadcaster.event.form.close);
+                dataProvider.deleteTimerGroup(scope.existingGroup)
+                    .then(function(resp){
+                        eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.delete, resp.data);
+                        eventBroadcaster.broadcast(eventBroadcaster.event.form.close);
+                    }, function(err){
+                        scope.formError = err.message;   
+                    });
             };
             scope.cancel = function(){
                 eventBroadcaster.broadcast(eventBroadcaster.event.form.close);

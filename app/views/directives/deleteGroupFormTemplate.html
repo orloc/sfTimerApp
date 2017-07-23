@@ -5,6 +5,9 @@
       ng-submit="submit()">
     <h4>ARE YOU SURE?</h4>
     <p class="small muted">Deleting a group deletes ALL its timers</p>
+    <div ng-show="formError" class="alert alert-danger pull-left">
+        <p>{{ formError}}</p>
+    </div>
     <button type="submit"
             class="btn btn-danger btn-block">
         Confirm

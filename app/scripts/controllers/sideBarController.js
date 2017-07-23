@@ -26,6 +26,20 @@ angular.module('sfTimer')
         $scope.groups.push(data);
     });
 
+    $scope.$on(eventBroadcaster.event.timerGroup.delete, function(e, data){
+        var i = 0;
+        for (i ; i < $scope.groups.length; i++){
+            if ($scope.groups[i].id === data.id){
+                break;
+            }
+        }
+        
+        $scope.groups = $scope.groups.slice(0, i)
+            .concat($scope.groups.slice(i+1));
+
+        $scope.activeGroup = null;
+    });
+
     $scope.$on(eventBroadcaster.event.timerGroup.update, function(e, data){
         for(var i = 0; i < $scope.groups.length; i++){
            if ($scope.groups[i].id === data.id){
