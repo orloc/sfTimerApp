@@ -10,12 +10,8 @@
                 </div>
             </div>
             <div class="progress">
-                <div class="progress-bar pull-left"
-                     ng-class="{
-                        'progress-bar-success': status === $parent.statuses.BEGUN,
-                        'progress-bar-warning':  status === $parent.statuses.HALF,
-                        'progress-bar-danger':  status === $parent.statuses.ENDING
-                     }"
+                <div class='progress-bar active'
+                     ng-class="[$parent.progressStatus]"
                      style="min-width: 1em;width: {{progressBar}}%;"></div>
             </div>
             <div class="row timer-body">
@@ -25,22 +21,16 @@
                         <span class="muted text-center small">{{ $parent.timerConfig.duration}}</span>
                     </p>
                     <div class="btn-group text-center">
-                        <button class="btn btn-sm btn-default" ng-hide="timerRunning" ng-click="start()"><i class="fa fa-play"></i></button>
-                        <button class="btn btn-sm btn-default" ng-show="timerRunning" ng-click="pause()"><i class="fa fa-stop"></i></button>
+                        <button class="btn btn-sm btn-default" ng-hide="timerRunning || hasStopped" ng-click="start()"><i class="fa fa-play"></i></button>
+                        <button class="btn btn-sm btn-default" ng-show="timerRunning && !hasStopped" ng-click="pause()"><i class="fa fa-stop"></i></button>
                         <button class="btn btn-sm btn-default" ng-click="resetTimer()">Reset</button>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="progress-spinner pull-right">
-                        <div class="not-started text-center" ng-hide="timerRunning"><div>
-                            <i class="fa fa-power-off" style="margin-top: 10px"></i>&nbsp;<span class="muted small" style="display: inline;">Off</span>
-                        </div></div>
-                        <div class="started" ng-show="timerRunning">
-                            <div class="spinner" ng-class="{
-                                'started': timerRunning
-                            }">
-                                <div class="cube1"></div>
-                                <div class="cube2"></div>
+                        <div class="not-started text-center" ng-if="!timerRunning">
+                            <div>
+                                <i class="fa fa-power-off" style="margin-top: 10px"></i>&nbsp;<span class="muted small" style="display: inline;">Off</span>
                             </div>
                         </div>
                     </div>

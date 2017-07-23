@@ -1,11 +1,16 @@
 
 angular.module('sfTimer')
-.controller('timerGridCtrl', ['$scope', 'dataProvider', 'SFTimerEvents','eventBroadcaster',
-    function($scope, dataProvider, SFTimerEvents, eventBroadcaster) {
+.controller('timerGridCtrl', ['$scope', 'dataProvider','eventBroadcaster', 'timeSorter', '$interval',
+    function($scope, dataProvider, eventBroadcaster, timerSorter, $interval) {
     
     $scope.activeTimers = [];
+
+    $interval(function(){
+        if (!$scope.activeTimers.length) return;
+         
+    }, 1000 * 3);
         
-    $scope.$on(SFTimerEvents.REMOVE_TIMER, function(e, data) {
+    $scope.$on(eventBroadcaster.event.timer.delete, function(e, data) {
         if ($scope.activeGroup === null) return; 
         dataProvider.removeTimer(data)
         .then(function(){
@@ -21,7 +26,15 @@ angular.module('sfTimer')
         $scope.activeTimers.push(val); 
     });
 
-    $scope.$on(eventBroadcaster.event.timerGroup.delete, function(e, data){
+    $scope.$on(eventBroadcaster.event.timer.started, function(event, val){
+        // post to the timer to start it
+    });
+
+    $scope.$on(eventBroadcaster.event.timer.paused, function(event, val){
+        // post to the timer to pause it
+    });
+
+    $scope.$on(eventBroadcaster.event.timerGroup.delete, function(){
         $scope.activeTimers = [];
     });
         

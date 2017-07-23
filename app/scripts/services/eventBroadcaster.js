@@ -7,7 +7,11 @@ angular.module('sfTimer')
                 close: 'event:form:close'
             },
             timer: {
-                created: 'event:timer:created'
+                created: 'event:timer:created',
+                delete: 'event:timer:deleted',
+                started: 'event:timer:started',
+                paused: 'event:timer:paused',
+                tick: 'event:timer:tick'
             },
             timerGroup: {
                 selected: 'event:timerGroup:selected',

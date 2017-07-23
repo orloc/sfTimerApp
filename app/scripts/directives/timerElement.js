@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sfTimer').directive('timerElement', ['SFTimerEvents', function(SFTimerEvents){
+angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', function(eventBroadcaster){
     return {
         templateUrl: 'views/directives/timerElementTemplate.html',
         scope: {
@@ -51,11 +51,6 @@ angular.module('sfTimer').directive('timerElement', ['SFTimerEvents', function(S
             }
             
             $scope.durationSeconds = desiredTime.diff(localConfig.start_time, 'seconds');
-            $scope.timerRunning = false;
-            $scope.hasStopped = false;
-            $scope.isPaused = false;
-            $scope.noShake = false;
-            $scope.status = null;
 
             $scope.statuses = {
                 BEGUN: 1,
@@ -73,20 +68,31 @@ angular.module('sfTimer').directive('timerElement', ['SFTimerEvents', function(S
                 TIMER_STOPPED: 'timer-stopped',
                 TICK: 'timer-tick'
             };
+            
+            var classArr = [
+                'progress-bar-info',
+                'progress-bar-warning',
+                'progress-bar-danger'
+            ];
+            scope.timerRunning = false;
+            scope.hasStopped = false;
+            scope.status = 0;
+            scope.progressStatus = '';
 
             var localConfig = scope.timerConfig;
-
-            scope.$on(timerEvents.TIMER_STOPPED, function (e, val) {
+            
+            scope.$on(timerEvents.TIMER_STOPPED, function(){
                 scope.timerRunning = false;
-                scope.isPaused = false;
-                scope.hasStopped = true;
-                scope.noShake = false;
             });
             
             scope.$on(timerEvents.TICK, function (event, data) {
                 var statuses = scope.statuses;
-                var percentDone = Math.floor((data.millis / (scope.durationSeconds * 1000)) * 100);
+                var percentDone = Math.ceil((data.millis / (scope.durationSeconds * 1000)) * 100);
 
+                eventBroadcaster.broadcast(eventBroadcaster.event.timer.tick, {
+                    timer: localConfig, milliseconds: data.millis
+                });
+                
                 if (percentDone === 100) return statuses.BEGUN;
 
                 scope.status = (function(){
@@ -94,29 +100,39 @@ angular.module('sfTimer').directive('timerElement', ['SFTimerEvents', function(S
                     if (percentDone < 50 && percentDone > 15) return statuses.HALF;
                     return statuses.ENDING;
                 })();
+                
+                scope.progressStatus = classArr[scope.status-1];
+                
+                
+                if (data.millis === 0){
+                    scope.$apply(function(){
+                        scope.hasStopped = true;
+                        scope.timmerRunning = false;
+                    });
+                }
             });
 
             scope.pause = function(){
-                scope.$broadcast(timerEvents.STOP);
-                scope.isPaused = true;
                 scope.timerRunning = false;
+                eventBroadcaster.broadcast(eventBroadcaster.event.timer.paused, localConfig);
+                scope.$broadcast(timerEvents.STOP);
             };
 
             scope.start = function(){
                 scope.timerRunning = true;
-                scope.isPaused = false;
+                eventBroadcaster.broadcast(eventBroadcaster.event.timer.started, localConfig);
                 scope.$broadcast(timerEvents.START);
             };
 
             scope.resetTimer = function(){
                 scope.$broadcast(timerEvents.RESET);
                 scope.timerRunning = false;
-                scope.isPaused = false;
+                scope.hasStopped = false;
             };
 
 
             scope.removeTimer = function(){
-                scope.$emit(SFTimerEvents.REMOVE_TIMER, localConfig);
+                scope.$emit(eventBroadcaster.event.timer.delete, localConfig);
             };
 
             scope.getRemainingTime = function(time){

@@ -1,7 +1,7 @@
 
 angular.module('sfTimer')
-.controller('sideBarCtrl', ['$scope', 'dataProvider', 'SFTimerEvents','eventBroadcaster',
-    function($scope, dataProvider, SFTimerEvents, eventBroadcaster) {
+.controller('sideBarCtrl', ['$scope', 'dataProvider', 'eventBroadcaster',
+    function($scope, dataProvider, eventBroadcaster) {
     
     $scope.groups = [];
     $scope.activeGroup = null;

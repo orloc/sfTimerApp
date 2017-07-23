@@ -77,6 +77,17 @@ angular.module('sfTimer', [
     if (!securityManager.getValidToken()) {
         $location.path('/login');
     }
+        
+    $rootScope.safeApply =  function(fn) {
+        var phase = this.$root.$$phase;
+        if(phase == '$apply' || phase == '$digest') {
+            if(fn && (typeof(fn) === 'function')) {
+                fn();
+            }
+        } else {
+            this.$apply(fn);
+        }
+    };
 
     $rootScope.$on('tokenHasExpired', function() {
         alert('Your session has expired!');
