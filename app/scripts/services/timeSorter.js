@@ -4,6 +4,10 @@ angular.module('sfTimer')
 .service('timeSorter', ['$rootScope', 'eventBroadcaster', function($rootScope, eventBroadcaster){
     var activeTimes = [];
     var seen = {};
+
+    $rootScope.$on(eventBroadcaster.event.timer.delete, function(e, val) {
+        remove( { timer: val }, activeTimes);
+    });
     
     $rootScope.$on(eventBroadcaster.event.timer.tick, function(e, val){
         if (typeof seen[val.timer.id] === 'undefined'){
@@ -20,11 +24,15 @@ angular.module('sfTimer')
     };
     
     function update(val, arr){
+        remove(val, arr);
+        insert(val, arr);
+    }
+    
+    function remove(val, arr){
         var timeIndex = _.findIndex(arr, function(i){
             return i.timer.id === val.timer.id;
         });
         arr.splice(timeIndex, 1);
-        insert(val, activeTimes);
     }
     
     function insert(val, arr, startVal, endVal){

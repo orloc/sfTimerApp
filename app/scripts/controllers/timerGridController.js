@@ -8,14 +8,20 @@ angular.module('sfTimer')
     $interval(function(){
         if (!$scope.activeTimers.length) return;
         var activeTimers = timerSorter.getTimes();
+        var currentTimers = $scope.activeTimers.map(function(i){
+            return  i.id;
+        });
+        
         var ids = activeTimers.map(function(i) {
             return i.id;
+        }).filter(function(id){
+            return currentTimers.indexOf(id) >= 0;
         });
         
         $scope.activeTimers = activeTimers.concat($scope.activeTimers.filter(function(i){
             return ids.indexOf(i.id) === -1;  
         }));
-    }, 1000);
+    }, 750);
         
     $scope.$on(eventBroadcaster.event.timer.delete, function(e, data) {
         if ($scope.activeGroup === null) return; 
