@@ -10,7 +10,9 @@ angular.module('sfTimer')
                 created: 'event:timer:created'
             },
             timerGroup: {
-                selected: 'event:timerGroup:selected'
+                selected: 'event:timerGroup:selected',
+                update: 'event:timerGroup:update',
+                create: 'event:timerGroup:create'
             }
         };
         

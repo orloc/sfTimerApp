@@ -24,6 +24,15 @@ angular.module('sfTimer')
         return $http.get(getResourceUrl(path));
     };
     
+    this.updateTimerGroup = function(group, data){
+        var path = ['timer-group', group.id].join('/');
+        return $http.patch(getResourceUrl(path), data);
+    };
+
+    this.createTimerGroup = function(data){
+        return $http.post(getResourceUrl('timer-group'), data);
+    };
+    
     this.createTimer = function(data) {
         var path = ['timer-group', data.timer_group_id, 'timer'].join('/');
         return $http.post(getResourceUrl(path), data);

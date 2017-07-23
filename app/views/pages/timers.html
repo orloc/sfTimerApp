@@ -28,6 +28,7 @@
         <div class="bottom-settings col-sm-3" ng-show="activeGroup !== null">
             <custom-timer-form ng-if="activeForm == forms.addTimer " timer-group="activeGroup"></custom-timer-form>
             <add-edit-group-form ng-if="activeForm === forms.editGroup " existing-group="activeGroup"></add-edit-group-form>
+            <add-edit-group-form ng-if="activeForm === forms.addGroup" existing-group="false"></add-edit-group-form>
             <delete-group-form ng-if="activeForm === forms.deleteGroup " existing-group="activeGroup"></delete-group-form>
 
             <div class="pull-left">
@@ -37,7 +38,7 @@
             <div class="pull-right">
                 <p class="small muted">Group</p>
                 <div class="btn-group">
-                    <button class="btn btn-small btn-primary"><i class="fa fa-plus"></i></button>
+                    <button ng-click="toggleForm(forms.addGroup)" class="btn btn-small btn-primary"><i class="fa fa-plus"></i></button>
                     <button ng-click="toggleForm(forms.editGroup)" class="btn btn-small btn-warning"><i class="fa fa-gear"></i></button>
                     <button ng-click="toggleForm(forms.deleteGroup)" class="btn btn-small btn-danger"><i class="fa  fa-trash"></i></button>
                 </div>

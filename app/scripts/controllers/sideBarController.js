@@ -7,6 +7,7 @@ angular.module('sfTimer')
     $scope.activeGroup = null;
     $scope.activeForm = false;
     $scope.forms = {
+        addGroup: 'addGroup',
         editGroup: 'editGroup',
         addTimer: 'addTimer',
         deleteGroup: 'deleteGroup'
@@ -17,8 +18,22 @@ angular.module('sfTimer')
             $scope.groups = times;
         });
         
-    $scope.$on(eventBroadcaster.event.form.close, function(e, data){
+    $scope.$on(eventBroadcaster.event.form.close, function(){
         $scope.activeForm = null;
+    });
+
+    $scope.$on(eventBroadcaster.event.timerGroup.create, function(e, data){
+        $scope.groups.push(data);
+    });
+
+    $scope.$on(eventBroadcaster.event.timerGroup.update, function(e, data){
+        for(var i = 0; i < $scope.groups.length; i++){
+           if ($scope.groups[i].id === data.id){
+                $scope.groups[i] = data; 
+                $scope.activeGroup = data;
+               break;
+           }
+        }
     });
         
     $scope.$watch('activeGroup', function(val){
@@ -40,5 +55,4 @@ angular.module('sfTimer')
     $scope.toggleForm = function(group){
         $scope.activeForm = group;
     };
-        
 }]);
