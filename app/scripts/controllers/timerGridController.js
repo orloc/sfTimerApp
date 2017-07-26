@@ -69,9 +69,6 @@ angular.module('sfTimer')
 
     $scope.$on(eventBroadcaster.event.timer.reset,function(event, val){
         if (!val) return;
-        val.running = false;
-        val.last_tick = null;
-        val.start_time = null;
         dataProvider.updateTimer(val)
             .then(function(data){
                 var timer = data.data;

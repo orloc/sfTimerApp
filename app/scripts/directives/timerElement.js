@@ -110,6 +110,9 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
             };
 
             $scope.resetTimer = function(){
+                $scope.timer.running = false;
+                $scope.timer.last_tick = null;
+                $scope.timer.start_time = null;
                 eventBroadcaster.broadcast(eventBroadcaster.event.timer.reset, $scope.timer);
                 $scope.$broadcast('timer-reset');
             };
