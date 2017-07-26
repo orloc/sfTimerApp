@@ -42,7 +42,11 @@ angular.module('sfTimer')
     $scope.$on(eventBroadcaster.event.timer.started, function(event, val){
         if (!val) return;
         val.running = true;
-        val.start_time = moment().unix();
+        
+        if (!val.start_time){
+            val.start_time = moment().format('YYYY-MM-DD HH:mm:ss');
+        } 
+        
         dataProvider.updateTimer(val)
             .then(function(data){
                 // ? 
@@ -54,7 +58,7 @@ angular.module('sfTimer')
     $scope.$on(eventBroadcaster.event.timer.paused, function(event, val){
         if (!val) return;
         val.running = false;
-        val.last_tick = moment().unix();
+        val.last_tick = moment().format('YYYY-MM-DD HH:mm:ss');
         dataProvider.updateTimer(val)
             .then(function(data){
                 // ? 
@@ -70,7 +74,13 @@ angular.module('sfTimer')
         val.start_time = null;
         dataProvider.updateTimer(val)
             .then(function(data){
-                // ? 
+                var timer = data.data;
+                for(var i = 0; i < $scope.activeTimers.length; i++){
+                    if ($scope.activeTimers[i].id === timer.id){
+                        $scope.activeTimers[i] = timer;
+                        break;
+                    } 
+                }
             }, function(err){
                 console.log(err);
             });
