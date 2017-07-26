@@ -16,7 +16,9 @@ angular.module('sfTimer')
     dataProvider.getTimerGroups()
         .then(function(times) {
             $scope.groups = times;
-        });
+        }).catch(function(err){
+        console.log(err);
+    });
         
     $scope.$on(eventBroadcaster.event.form.close, function(){
         $scope.activeForm = null;

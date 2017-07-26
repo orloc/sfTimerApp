@@ -18,7 +18,9 @@
     "font-awesome": "^4.7.0",
     "angular-web-notification": "^1.2.3",
     "csshake": "^1.5.1",
-    "html5-desktop-notifications2": "^3.0.1"
+    "html5-desktop-notifications2": "^3.0.1",
+    "angular-jwt": "^0.1.9",
+    "a0-angular-storage": "^0.0.15"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"

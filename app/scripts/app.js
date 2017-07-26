@@ -68,11 +68,12 @@ angular.module('sfTimer', [
     });
         
     $httpProvider.interceptors.push('jwtInterceptor');
-
 }])
-.run(['$rootScope', '$state', 'authManager', '$location','securityManager',
-    function($rootScope, $state, authManager, $location, securityManager){
+.run(['$rootScope', '$state', 'authManager', '$location','securityManager', '$qProvider',
+    function($rootScope, $state, authManager, $location, securityManage, $qProvider){
     authManager.checkAuthOnRefresh();
+        
+    $qProvider.errorOnUnhandledRejections(false);
 
     if (!securityManager.getValidToken()) {
         $location.path('/login');
@@ -91,6 +92,7 @@ angular.module('sfTimer', [
 
     $rootScope.$on('tokenHasExpired', function() {
         alert('Your session has expired!');
+        $rootScope.isAuthed = false;
         $state.go('login');
     });
 

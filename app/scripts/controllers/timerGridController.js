@@ -30,7 +30,7 @@ angular.module('sfTimer')
             $scope.activeTimers = _.filter($scope.activeTimers, function(i){
                 return i.id !== data.id;
             });
-        }, function(err){
+        }).catch(function(err){
             console.log(err);
         });
     });
@@ -48,9 +48,7 @@ angular.module('sfTimer')
         } 
         
         dataProvider.updateTimer(val)
-            .then(function(data){
-                // ? 
-            }, function(err){
+            .catch(function(err){
                 console.log(err);
             });
     });
@@ -60,9 +58,7 @@ angular.module('sfTimer')
         val.running = false;
         val.last_tick = moment().format('YYYY-MM-DD HH:mm:ss');
         dataProvider.updateTimer(val)
-            .then(function(data){
-                // ? 
-            }, function(err){
+            .catch(function(err){
                 console.log(err);
             });
     });
@@ -70,17 +66,17 @@ angular.module('sfTimer')
     $scope.$on(eventBroadcaster.event.timer.reset,function(event, val){
         if (!val) return;
         dataProvider.updateTimer(val)
-            .then(function(data){
-                var timer = data.data;
+            .then(function(timer){
                 for(var i = 0; i < $scope.activeTimers.length; i++){
                     if ($scope.activeTimers[i].id === timer.id){
                         $scope.activeTimers[i] = timer;
                         break;
                     } 
                 }
-            }, function(err){
-                console.log(err);
-            });
+            })
+            .catch(function(err) { 
+            console.log(err); 
+        });
     });
 
     $scope.$on(eventBroadcaster.event.timerGroup.delete, function(){
@@ -89,8 +85,8 @@ angular.module('sfTimer')
         
     $scope.$on(eventBroadcaster.event.timerGroup.selected, function(event, val){
         dataProvider.getTimersByGroup(val)
-            .then(function(response){
-                $scope.activeTimers = response.data;
+            .then(function(timers){
+                $scope.activeTimers = timers;
         });
         
     });

@@ -154,7 +154,7 @@ gulp.task('client:build', ['html', 'styles'], function () {
     //.pipe($.uglify())
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
-    .pipe($.minifyCss({cache: true}))
+    .pipe($.minifyCss({cache: false}))
     .pipe(cssFilter.restore())
     .pipe($.rev())
     .pipe($.revReplace())
