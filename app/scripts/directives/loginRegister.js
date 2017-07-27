@@ -36,7 +36,7 @@ angular.module('sfTimer').directive('loginRegister', [ function(){
                         .then(function(res) {
                             securityManager.setLoginTokenAndRedirect(res); 
                         }, function(err){
-                            $scope.formError = err.data.message;
+                            $scope.formError = err.message;
                             $timeout(function(){
                                 $scope.formError = null;
                             }, 3500);
@@ -47,6 +47,17 @@ angular.module('sfTimer').directive('loginRegister', [ function(){
                 };
 
                 $scope.submitRegister= function(){
+                    var dataCopy = $scope.data;
+                    $scope.data = {};
+                    dataProvider.register(dataCopy)
+                        .then(function(res) {
+                            securityManager.setLoginTokenAndRedirect(res);
+                        }, function(err){
+                            $scope.formError = err.message;
+                            $timeout(function(){
+                                $scope.formError = null;
+                            }, 3500);
+                        });
                 };
         }]
     };

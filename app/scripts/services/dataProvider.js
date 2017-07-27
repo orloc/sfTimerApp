@@ -8,7 +8,16 @@ angular.module('sfTimer')
             .then(function(response) {
                 return $q.resolve(response.data);
             }).catch(function(err){
-                return $q.reject(err);
+                return $q.reject(err.data);
+            });
+    };
+
+    this.register = function(data){
+        return $http.post([apiConfig.baseUrl, 'register'].join('/'), data)
+            .then(function(response) {
+                return $q.resolve(response.data);
+            }).catch(function(err){
+                return $q.reject(err.data);
             });
     };
 
@@ -16,9 +25,17 @@ angular.module('sfTimer')
         return $http.get(getResourceUrl('timer-group'))
             .then(function (response) {
                 return $q.resolve(response.data); 
-            }).catch(function(err){
-                console.log(err, 'errr')
             });
+    };
+    
+    this.createInvitation = function(invitation){
+        return $http.post(getResourceUrl('invitation'), invitation)
+            .then(function (response) {
+                return $q.resolve(response.data);
+            }, function(err){
+                return $q.reject(err.data);
+            });
+        
     };
     
     // Users

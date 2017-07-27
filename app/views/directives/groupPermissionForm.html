@@ -4,20 +4,22 @@
     <li ng-repeat="user in user_access"></li>
 </ul>
 
-<ul ng-show="!user_access.length">
-    <li>No users invited</li>
-</ul>
+<p class="text-center" ng-show="!user_access.length">
+    No users invited
+</p>
+
 <form name="groupPermissions"
       ng-class="{
         'form form-inline': inline
       }"
       ng-submit="submit()">
-
-    <p class="small">Enter the userId of the person who invited you to this timer board.</p>
+    <p class="small">Enter the <i>profile name</i> of the person who invited you to this timer board.</p>
+    <p ng-if="error" class="text-danger">
+        {{ error }}
+    </p>
     <input  class="form-control"
-            placeholder="Enter a users id"
-            ng-model="formData.username"
-            name="username" type="text"/>
-
-    <button class="btn btn-block btn-primary" type="submit">Invite User</button>
+            placeholder="Enter a profile name"
+            ng-model="formData.profile_name"
+            name="name" type="text"/>
+    <button class="btn btn-block btn-primary" ng-disabled="groupPermissions.name.$invalid" type="submit">Invite User</button>
 </form>

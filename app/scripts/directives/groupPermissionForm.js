@@ -11,8 +11,17 @@ angular.module('sfTimer')
         controller: ['$scope', function($scope){
             
             $scope.user_access = [];
+            $scope.formData  = {};
+            $scope.error = false;
             $scope.submit = function(){
-                console.log('hi');
+                $scope.error = false;
+                $scope.formData.group_id = $scope.existingGroup.id;
+                dataProvider.createInvitation($scope.formData)
+                    .then(function(data){
+
+                    }).catch(function(err){
+                    $scope.error = err.message;
+                });
             };
         }]
     };

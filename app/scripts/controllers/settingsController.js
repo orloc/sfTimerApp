@@ -17,15 +17,11 @@ angular.module('sfTimer')
         };
         
         $scope.submitSettings = function(){
-
             $scope.loaded = false;
             dataProvider.updateMe($scope.settingData)
                 .then(function(resp){
                     updateUser(resp);
                     $scope.loaded = true;
-                })
-                .catch(function(err){
-                    console.log(err);  
                 });
             
         };

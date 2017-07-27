@@ -1,11 +1,9 @@
 <!-- Page Content -->
 <div class="row user-settings" ng-controller="userSettingsCtrl">
     <div class="col-sm-3"></div>
-    <div class="col-sm-6 well">
-        <div class="row">
+    <div class="col-sm-6">
+        <div class="row  well">
             <h3>User Settings</h3>
-            <p>If you change your email to an address that does not exist - you will not be able to reset your password if you lose it.</p>
-            <p>Profile names are used when individuals are inviting you to a group - they must be unique.</p>
             <div class="col-sm-6">
                 <p ng-show="!loaded">Loading...</p>
                 <form name="settingsForm" ng-submit="submitSettings()" ng-show="loaded">
@@ -27,6 +25,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <p>If you change your email to an address that does not exist - you will not be able to reset your password if you lose it.</p>
+                    <hr>
                     <div class="form-group">
                         <label >Profile Name</label>
                         <div class="input-group">
@@ -45,30 +46,38 @@
                             </div>
                         </div>
                     </div>
+
+                    <p>Profile names are used when individuals are inviting you to a group - they must be unique.</p>
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary btn-sm pull-right" value="Update">
                     </div>
                 </form>
             </div>
             <div class="col-sm-6">
-                <h4 class="muted">Reset Password</h4>
-                <p>Please first confirm your current password.</p>
-                <form name="resetForm" class="form-inline"
-                      ng-submit="confirmPassword()">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input name="currentPassword"
-                                   type="password"
-                                   placeholder="Current Password"
-                                   required
-                                   ng-model="resetData.password"
-                                   class="form-control">
+                <p class="text-center"><strong>Coming Soon</strong></p>
+                <div class="reset-form">
+                    <h4 class="muted">Reset Password</h4>
+                    <p>Please first confirm your current password.</p>
+                    <form name="resetForm" class="form-inline"
+                          ng-submit="confirmPassword()">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input name="currentPassword"
+                                       type="password"
+                                       disabled
+                                       placeholder="Current Password"
+                                       required
+                                       ng-model="resetData.password"
+                                       class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="input-group">
-                        <input type="submit" class="btn btn-primary btn-sm" value="Next">
-                    </div>
-                </form>
+                        <div class="input-group">
+                            <input type="submit"
+                                   disabled
+                                   class="btn btn-primary btn-sm" value="Next">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
