@@ -25,7 +25,7 @@ angular.module('sfTimer').directive('customTimerForm', ['dataProvider', 'eventBr
                 dataProvider.createTimer(scope.formData)
                     .then(function(data){
                         scope.formData = {};
-                        eventBroadcaster.broadcast(eventBroadcaster.event.timer.created, data.data);
+                        eventBroadcaster.broadcast(eventBroadcaster.event.timer.created, data);
                         eventBroadcaster.broadcast(eventBroadcaster.event.form.close);
                     }, function(err){
                         console.log(err);

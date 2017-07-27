@@ -24,7 +24,7 @@ angular.module('sfTimer')
                 if (!exists){
                     dataProvider.createTimerGroup(scope.formData)
                         .then(function(resp){
-                            eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.create, resp.data);
+                            eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.create, resp);
                             eventBroadcaster.broadcast(eventBroadcaster.event.form.close);
                         }, function(err){
                             scope.formError = err.message;
@@ -40,7 +40,7 @@ angular.module('sfTimer')
 
                     dataProvider.updateTimerGroup(scope.existingGroup, scope.formData)
                         .then(function(resp){
-                            eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.update, resp.data);
+                            eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.update, resp);
                             eventBroadcaster.broadcast(eventBroadcaster.event.form.close);
                         }, function(err){
                             scope.formError = err.message;

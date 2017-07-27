@@ -69,11 +69,10 @@ angular.module('sfTimer', [
         
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-.run(['$rootScope', '$state', 'authManager', '$location','securityManager', '$qProvider',
-    function($rootScope, $state, authManager, $location, securityManage, $qProvider){
+.run(['$rootScope', '$state', 'authManager', '$location','securityManager',
+    function($rootScope, $state, authManager, $location, securityManager){
     authManager.checkAuthOnRefresh();
-        
-    $qProvider.errorOnUnhandledRejections(false);
+    authManager.redirectWhenUnauthenticated();
 
     if (!securityManager.getValidToken()) {
         $location.path('/login');

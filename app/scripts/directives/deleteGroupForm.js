@@ -12,7 +12,7 @@ angular.module('sfTimer')
             scope.submit= function(){
                 dataProvider.deleteTimerGroup(scope.existingGroup)
                     .then(function(resp){
-                        eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.delete, resp.data);
+                        eventBroadcaster.broadcast(eventBroadcaster.event.timerGroup.delete, resp);
                         eventBroadcaster.broadcast(eventBroadcaster.event.form.close);
                     }, function(err){
                         scope.formError = err.message;   

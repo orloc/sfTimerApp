@@ -1,17 +1,19 @@
-nav.navbar-inverse{
+header {
+  nav {
+    p {
+      display: block;
+      position: relative;
+      line-height: 28px;
+      padding: 10px 15px;
+      margin: 0;
+    }
 
-}
-
-
-.help-link {
-    font-size: 3rem;
-    margin:0;
-    margin-left: 1em;
-    height: 50px;
-    color: $fontC;
-    i { margin-top: 0.35em; }
-    &:hover {
+    .logout {
+      background-color: black;
+      &:hover {
         cursor: pointer;
-        color: lighten($fontC, 30);
+        font-weight: bold;
+      }
     }
   }
+}

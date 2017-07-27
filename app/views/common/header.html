@@ -1,27 +1,31 @@
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation" ng-controller="headerCtrl">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-show="isAuthed">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand">EQ Timers</a>
+<header>
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation" ng-controller="headerCtrl">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-show="isAuthed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">EQ Timers</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" >
+                <ul class="nav navbar-nav" ng-show="isAuthed">
+                    <li class="active"><a ui-sref="timers">Timers</a></li>
+                    <li><a ui-sref="spawns">Spawns</a></li>
+                    <li><a ui-sref="users">Users</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" ng-show="isAuthed">
+                    <li>
+                        <p>Hello <strong>{{ currentUser().username }}</strong></p>
+                    </li>
+                    <li><a class="logout" ng-click="logout()">Logout</a></li>
+                </ul>
+            </div>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" >
-            <ul class="nav navbar-nav" ng-show="isAuthed">
-                <li class="active"><a ui-sref="timers">Timers</a></li>
-                <li><a ui-sref="spawns">Spawns</a></li>
-                <li><a ui-sref="users">Users</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right" ng-show="isAuthed">
-                <li>Hello <strong>{{ currentUser().username }}</strong></li>
-                <li><a ng-click="logout()">Logout</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- /.container -->
-</nav>
+        <!-- /.container -->
+    </nav>
+</header>

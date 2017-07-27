@@ -25,6 +25,7 @@ angular.module('sfTimer')
     });
 
     $scope.$on(eventBroadcaster.event.timerGroup.create, function(e, data){
+        console.log(data);
         $scope.groups.push(data);
     });
 

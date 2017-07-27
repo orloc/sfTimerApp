@@ -3,12 +3,9 @@
 @import 'squareSpinner';
 @import 'header';
 @import 'dashboard';
+@import 'sidemenu';
 @import 'customerTimerButton';
 @import 'timerElement';
-
-
-
-
 
 html, body {
   color: $fontC;
@@ -33,54 +30,6 @@ body {
   left: 0;
 }
 
-.side-menu {
-  position: relative;
-  height: 100%;
-  .middle {
-    text-align: center;
-    margin-top: 40%;
-  }
-
-  .timer-groups{
-    label {
-      padding: 5px;
-      display: inline-block;
-      font-size: 12px;
-      margin: 5px;
-
-      &:hover {
-        cursor: pointer;
-        opacity: 0.6;
-      }
-
-      &.active {
-        opacity: 0.6;
-      }
-    }
-    button {
-      font-size: 10px;
-    }
-  }
-
-  .bottom-settings {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    background-color: rgb(34, 34, 34);
-    text-align: center;
-    padding: 15px;
-
-    form {
-      padding: 10px;
-      button {
-        margin-top: 5px;
-      }
-    }
-    button {
-      font-size: 10px;
-    }
-  }
-}
 
 .socket-connection {
   position: absolute;
