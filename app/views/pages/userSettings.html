@@ -5,7 +5,8 @@
         <div class="row">
             <h3>User Settings</h3>
             <div class="col-sm-6">
-                <form name="settingsForm" ng-submit="submitSettings()">
+                <p ng-show="!loaded">Loading...</p>
+                <form name="settingsForm" ng-submit="submitSettings()" ng-show="loaded">
                     <div class="form-group">
                         <label >Email</label>
                         <div class="input-group">

@@ -21,6 +21,21 @@ angular.module('sfTimer')
             });
     };
     
+    // Users
+    this.getMe = function(){
+        return $http.get(getResourceUrl('user/me'))
+            .then(function(data){
+                return $q.resolve(data.data);
+            });
+    };
+
+    this.updateMe = function(data){
+        return $http.patch(getResourceUrl('user'), data)
+            .then(function(data){
+                return $q.resolve(data.data);
+            });
+    };
+    
     // Groups
     this.updateTimerGroup = function(group, data){
         var path = ['timer-group', group.id].join('/');
