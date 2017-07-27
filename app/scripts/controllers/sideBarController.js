@@ -9,6 +9,7 @@ angular.module('sfTimer')
     $scope.forms = {
         addGroup: 'addGroup',
         editGroup: 'editGroup',
+        managePermissions: 'groupPerms',
         addTimer: 'addTimer',
         deleteGroup: 'deleteGroup'
     };

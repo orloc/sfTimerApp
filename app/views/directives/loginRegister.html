@@ -126,6 +126,23 @@
     </div>
     <div class="form-group">
         <div class="input-group">
+            <input name="profile_name"
+                   type="text"
+                   required
+                   ng-model="data.profile_name"
+                   class="form-control"
+                   placeholder="Profile Name">
+            <div class="input-group-addon">
+                <i class="fa"
+                   ng-class="{
+                        'fa-check': registrationForm.profile_name.$valid,
+                        'fa-times': registrationForm.profile_name.$invalid,
+                    }"></i>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
             <input name="password"
                    required
                    ng-model="data.password"

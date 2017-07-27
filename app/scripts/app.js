@@ -39,6 +39,13 @@ angular.module('sfTimer', [
     });
 
     $stateProvider.state({
+        name: 'settings',
+        url: '/settings',
+        templateUrl: 'views/pages/userSettings.html',
+        data: { requireLogin: true }
+    });
+
+    $stateProvider.state({
         name: 'users',  
         url: '/users',
         templateUrl: 'views/pages/users.html',
