@@ -47,3 +47,12 @@
     }
   }
 }
+
+form[name="groupPermissions"] {
+  div[class^="col-md"]{
+    input{
+      width: 90%;
+    }
+  }
+
+}

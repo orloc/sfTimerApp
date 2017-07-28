@@ -9,17 +9,34 @@
 </p>
 
 <form name="groupPermissions"
-      ng-class="{
-        'form form-inline': inline
-      }"
-      ng-submit="submit()">
+    class="form form-inline"
+    ng-submit="submit()">
     <p class="small">Enter the <i>profile name</i> of the person who invited you to this timer board.</p>
     <p ng-if="error" class="text-danger">
         {{ error }}
     </p>
-    <input  class="form-control"
-            placeholder="Enter a profile name"
-            ng-model="formData.profile_name"
-            name="name" type="text"/>
-    <button class="btn btn-block btn-primary" ng-disabled="groupPermissions.name.$invalid" type="submit">Invite User</button>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="form-group">
+                <label>Profile Name</label>
+                <input  placeholder="Profile Name"
+                        required
+                        class="form-control"
+                        ng-model="formData.profile_name"
+                        name="name" type="text"/>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Permission</label>
+                <select ng-options="key.name as key.name for key in permissions"
+                        class="form-control"
+                        required
+                        ng-model="formData.permission_grant"
+                        name="permission" >
+                </select>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-block btn-primary" ng-disabled="groupPermissions.$invalid" type="submit">Invite User</button>
 </form>
