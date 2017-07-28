@@ -19,6 +19,11 @@ angular.module('sfTimer')
             $scope.formData  = {};
             $scope.error = false;
             
+            dataProvider.getGroupMembers($scope.existingGroup)
+                .then(function(members){
+                    $scope.user_access = members;
+                });
+            
             $scope.submit = function(){
                 $scope.error = false;
                 $scope.formData.group_id = $scope.existingGroup.id;

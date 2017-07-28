@@ -61,6 +61,13 @@ angular.module('sfTimer')
                 return $q.resolve(data.data);
             });
     };
+    
+    this.getGroupMembers = function(group){
+        return $http.get(getResourceUrl("timer-group/member?group_id="+group.id))
+            .then(function(data){
+                return $q.resolve(data.data);
+            });
+    };
 
     this.createTimerGroup = function(data){
         return $http.post(getResourceUrl('timer-group'), data)

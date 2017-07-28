@@ -1,7 +1,14 @@
 <h4>Manage Permissions</h4>
 
-<ul ng-show="user_access.length">
-    <li ng-repeat="user in user_access"></li>
+<ul ng-show="user_access.length" class="list-group" >
+    <li ng-repeat="user in user_access" class="list-group-item" ng-class="{ 'disabled': !user.approved}">
+        <span class="badge">{{ user.privilege }}</span>
+        <p>
+            {{ user.profile_name }} -
+            <span class="small" ng-show="user.approved">Approved</span>
+            <span class="small" ng-show="!user.approved">Pending</span>
+        </p>
+    </li>
 </ul>
 
 <p class="text-center" ng-show="!user_access.length">
