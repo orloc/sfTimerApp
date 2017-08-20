@@ -48,10 +48,26 @@
   }
 }
 
-form[name="groupPermissions"] {
-  div[class^="col-md"]{
-    input{
-      width: 90%;
+.permission-management {
+
+  .list-group-item {
+    color: black;
+    line-height: 45px;
+    padding: 2.5px;
+    p {
+      margin: 0;
+      &.small {
+        line-height: 12px;
+        opacity: 0.8;
+      }
+    }
+  }
+
+  form[name="groupPermissions"] {
+    div[class^="col-md"]{
+      input{
+        width: 90%;
+      }
     }
   }
 

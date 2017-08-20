@@ -46,6 +46,13 @@ angular.module('sfTimer', [
     });
 
     $stateProvider.state({
+        name: 'invitations',
+        url: '/invitations',
+        templateUrl: 'views/pages/invitations.html',
+        data: { requireLogin: true }
+    });
+
+    $stateProvider.state({
         name: 'users',  
         url: '/users',
         templateUrl: 'views/pages/users.html',
@@ -97,7 +104,6 @@ angular.module('sfTimer', [
     };
 
     $rootScope.$on('tokenHasExpired', function() {
-        alert('Your session has expired!');
         $rootScope.isAuthed = false;
         $state.go('login');
     });

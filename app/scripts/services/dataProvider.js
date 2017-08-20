@@ -21,13 +21,7 @@ angular.module('sfTimer')
             });
     };
 
-    this.getTimerGroups = function(){
-        return $http.get(getResourceUrl('timer-group'))
-            .then(function (response) {
-                return $q.resolve(response.data); 
-            });
-    };
-    
+    // invitations
     this.createInvitation = function(invitation){
         return $http.post(getResourceUrl('invitation'), invitation)
             .then(function (response) {
@@ -35,7 +29,37 @@ angular.module('sfTimer')
             }, function(err){
                 return $q.reject(err.data);
             });
+    };
+    
+    this.getMyInvitations = function(){
+        return $http.get(getResourceUrl('invitation'))
+            .then(function (response) {
+                return $q.resolve(response.data);
+            }, function(err){
+                return $q.reject(err.data);
+            });
+    };
+
+    this.checkInvitations = function(){
+        return $http.get(getResourceUrl('invitation/check'))
+            .then(function (response) {
+                return $q.resolve(response.data);
+            }, function(err){
+                return $q.reject(err.data);
+            });
+    };
+
+    this.updateInvitation = function(invitation){
+        var payload  = {
+            status: invitation.status === 1 ? 'APPROVED' : (invitation.status === 2 ? 'REJECTED': null)
+        };
         
+        return $http.patch(getResourceUrl(['invitation', invitation.id].join('/')), payload)
+            .then(function (response) {
+                return $q.resolve(response.data);
+            }, function(err){
+                return $q.reject(err.data);
+            });
     };
     
     // Users
@@ -54,6 +78,13 @@ angular.module('sfTimer')
     };
     
     // Groups
+    this.getTimerGroups = function(){
+        return $http.get(getResourceUrl('timer-group'))
+            .then(function (response) {
+                return $q.resolve(response.data);
+            });
+    };
+    
     this.updateTimerGroup = function(group, data){
         var path = ['timer-group', group.id].join('/');
         return $http.patch(getResourceUrl(path), data)
