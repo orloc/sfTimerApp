@@ -43,7 +43,12 @@ angular.module('sfTimer').directive('loginRegister', [ function(){
                         });
                 };
 
-                $scope.submitGuest= function(){
+                $scope.passwordsMatch = function(){
+                    return $scope.data.password === $scope.data.password_confirmation;
+                };
+
+                $scope.usernameNotLogin = function(){
+                    return $scope.data.username !== $scope.data.profile_name;
                 };
 
                 $scope.submitRegister= function(){

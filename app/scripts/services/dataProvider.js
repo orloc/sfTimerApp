@@ -79,14 +79,14 @@ angular.module('sfTimer')
     
     // Groups
     this.getTimerGroups = function(){
-        return $http.get(getResourceUrl('timer-group'))
+        return $http.get(getResourceUrl('timergroup'))
             .then(function (response) {
                 return $q.resolve(response.data);
             });
     };
     
     this.updateTimerGroup = function(group, data){
-        var path = ['timer-group', group.id].join('/');
+        var path = ['timergroup', group.id].join('/');
         return $http.patch(getResourceUrl(path), data)
             .then(function(data){
                 return $q.resolve(data.data);
@@ -94,21 +94,21 @@ angular.module('sfTimer')
     };
     
     this.getGroupMembers = function(group){
-        return $http.get(getResourceUrl("timer-group/member?group_id="+group.id))
+        return $http.get(getResourceUrl("timergroup/member?group_id="+group.id))
             .then(function(data){
                 return $q.resolve(data.data);
             });
     };
 
     this.createTimerGroup = function(data){
-        return $http.post(getResourceUrl('timer-group'), data)
+        return $http.post(getResourceUrl('timergroup'), data)
             .then(function(data){
                 return $q.resolve(data.data);
             });
     };
     
     this.deleteTimerGroup = function(group){
-        var path = ['timer-group', group.id].join('/');
+        var path = ['timergroup', group.id].join('/');
         return $http.delete(getResourceUrl(path))
             .then(function(data){
                 return $q.resolve(data.data);
@@ -116,7 +116,7 @@ angular.module('sfTimer')
     };
 
     this.getTimersByGroup = function(group){
-        var path = ['timer-group', group.id, 'timer'].join('/');
+        var path = ['timergroup', group.id, 'timer'].join('/');
         return $http.get(getResourceUrl(path))
             .then(function(data){
                 return $q.resolve(data.data);
@@ -125,7 +125,7 @@ angular.module('sfTimer')
     
     // Timers
     this.createTimer = function(data) {
-        var path = ['timer-group', data.timer_group_id, 'timer'].join('/');
+        var path = ['timergroup', data.timer_group_id, 'timer'].join('/');
         return $http.post(getResourceUrl(path), data)
             .then(function(data){
                 return $q.resolve(data.data);
@@ -133,7 +133,7 @@ angular.module('sfTimer')
     };
     
     this.updateTimer = function(data){
-        var path = ['timer-group', data.timer_group_id, 'timer', data.id].join('/');
+        var path = ['timergroup', data.timer_group_id, 'timer', data.id].join('/');
         return $http.patch(getResourceUrl(path), data)
             .then(function(data){
                 return $q.resolve(data.data);
@@ -141,7 +141,7 @@ angular.module('sfTimer')
     };
 
     this.removeTimer = function(timer) {
-        var path = ['timer-group', timer.timer_group_id, 'timer', timer.id].join('/');
+        var path = ['timergroup', timer.timer_group_id, 'timer', timer.id].join('/');
         return $http.delete(getResourceUrl(path))
             .then(function(data){
                 return $q.resolve(data.data);

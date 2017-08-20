@@ -48,6 +48,17 @@
   }
 }
 
+.corner-close {
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  right:0;
+  &:hover{
+    cursor: pointer;
+    background: black;
+  }
+}
+
 .permission-management {
 
   .list-group-item {
