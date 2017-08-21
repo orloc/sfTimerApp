@@ -6,6 +6,9 @@ angular.module('sfTimer')
             form: {
                 close: 'event:form:close'
             },
+            invitation: {
+                completed: 'event:invitations:empty'
+            },
             timer: {
                 created: 'event:timer:created',
                 delete: 'event:timer:deleted',

@@ -1,7 +1,7 @@
 
 angular.module('sfTimer')
-.controller('sideBarCtrl', ['$scope', 'dataProvider', 'eventBroadcaster',
-    function($scope, dataProvider, eventBroadcaster) {
+.controller('sideBarCtrl', ['$scope', 'dataProvider', 'eventBroadcaster','socket',
+    function($scope, dataProvider, eventBroadcaster, socket) {
     
     $scope.groups = [];
     $scope.activeGroup = null;
@@ -29,29 +29,8 @@ angular.module('sfTimer')
         $scope.groups.push(data);
     });
 
-    $scope.$on(eventBroadcaster.event.timerGroup.delete, function(e, data){
-        var i = 0;
-        for (i ; i < $scope.groups.length; i++){
-            if ($scope.groups[i].id === data.id){
-                break;
-            }
-        }
-        
-        $scope.groups = $scope.groups.slice(0, i)
-            .concat($scope.groups.slice(i+1));
-
-        $scope.activeGroup = null;
-    });
-
-    $scope.$on(eventBroadcaster.event.timerGroup.update, function(e, data){
-        for(var i = 0; i < $scope.groups.length; i++){
-           if ($scope.groups[i].id === data.id){
-                $scope.groups[i] = data; 
-                $scope.activeGroup = data;
-               break;
-           }
-        }
-    });
+    $scope.$on(eventBroadcaster.event.timerGroup.delete, deleteGroup);
+    $scope.$on(eventBroadcaster.event.timerGroup.update, updateGroup);
         
     $scope.$watch('activeGroup', function(val){
         if (!val) return;
@@ -72,4 +51,48 @@ angular.module('sfTimer')
     $scope.toggleForm = function(group){
         $scope.activeForm = group;
     };
+        
+    function deleteGroup(e, data){
+        var i = 0;
+        for (i ; i < $scope.groups.length; i++){
+            if ($scope.groups[i].id === data.id){
+                break;
+            }
+        }
+
+        $scope.groups = $scope.groups.slice(0, i)
+        .concat($scope.groups.slice(i+1));
+
+        if ($scope.activeGroup.id === data.id){
+            $scope.activeGroup = null;
+        }
+    }
+    
+    function updateGroup(e, data){
+        for(var i = 0; i < $scope.groups.length; i++){
+            if ($scope.groups[i].id === data.id){
+                $scope.groups[i] = data;
+                $scope.activeGroup = data;
+                break;
+            }
+        }
+    }
+
+    var events = socket.events;
+        
+    socket.on(events.update, function(data){
+        if (!shouldRecognizeEvent(data)) return;
+        var object = data.payload;
+        updateGroup(null, object);
+    });
+
+    socket.on(events.delete, function(data){
+        if (!shouldRecognizeEvent(data, true)) return;
+        var object = data.payload;
+        deleteGroup(null,object);
+    });
+
+    function shouldRecognizeEvent(data) {
+        return data.entity === 'timergroup';
+    }
 }]);

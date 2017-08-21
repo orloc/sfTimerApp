@@ -1,12 +1,13 @@
 
 angular.module('sfTimer')
-.controller('invitationCtrl', ['$scope', 'dataProvider',
-    function($scope, dataProvider) {
+.controller('invitationCtrl', ['$scope', 'dataProvider', 'socket','securityManager','eventBroadcaster',
+    function($scope, dataProvider, socket, securityManager, eventBroadcaster) {
         $scope.loaded = false;
         $scope.settingData = {};
 
         $scope.invitations = [];
         $scope.completed = [];
+        $scope.delete = [];
 
         $scope.statuses = {
             NEW: 0,
@@ -23,29 +24,7 @@ angular.module('sfTimer')
             }
         };
 
-        dataProvider.getMyInvitations()
-            .then(function(invitations){
-                var invites = [];
-                var old = [];
-                var deleted = [];
-                invitations.map(function(inv){
-                    if (inv.group.deleted_at === null){
-                        if (parseInt(inv.status) === $scope.statuses.NEW){
-                            invites.push(inv);
-                        } else {
-                            old.push(inv);
-                        } 
-                    } else {
-                        deleted.push(inv);
-                    } 
-                });
-                
-                $scope.invitations = invites;
-                $scope.completed = old;
-                $scope.deleted = deleted;
-                
-                $scope.loaded = true;
-            });
+        dataProvider.getMyInvitations().then(mapInvitations);
         
         $scope.approve = function(invitation){
             invitation.status = $scope.statuses.APPROVED;
@@ -56,6 +35,46 @@ angular.module('sfTimer')
             invitation.status = $scope.statuses.REJECTED;
             doUpdate(invitation);
         };
+
+        var events = socket.events;
+
+        socket.on(events.create, function(data){
+            if (!shouldRecognizeEvent(data)) return;
+            var invites = _.clone($scope.invitations);
+            invites.push(data.payload);
+
+            $scope.$apply(function(){
+                $scope.invitations = invites;
+            });
+        });
+        
+        function mapInvitations(invitations){
+            var invites = [];
+            var old = [];
+            var deleted = [];
+            invitations.map(function(inv){
+                if (inv.group.deleted_at === null){
+                    if (parseInt(inv.status) === $scope.statuses.NEW){
+                        invites.push(inv);
+                    } else {
+                        old.push(inv);
+                    }
+                } else {
+                    deleted.push(inv);
+                }
+            });
+
+            $scope.invitations = invites;
+            $scope.completed = old;
+            $scope.deleted = deleted;
+
+            $scope.loaded = true;
+        }
+
+        function shouldRecognizeEvent(data) {
+            return data.entity === 'invitation'
+              && parseInt(data.payload.invitee_id) === parseInt(securityManager.getCurrentUser().id);
+        }
         
         function doUpdate(invitation){
             dataProvider.updateInvitation(invitation)
@@ -64,6 +83,11 @@ angular.module('sfTimer')
                     $scope.invitations = $scope.invitations.filter(function(item){
                         return item.id !== data.id;
                     });
+                    
+                    if ($scope.invitations.length === 0){
+                        var event = eventBroadcaster.event;
+                        eventBroadcaster.broadcast(event.invitation.completed); 
+                    }
                 });
         }
 }]);
