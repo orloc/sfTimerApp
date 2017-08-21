@@ -1,9 +1,66 @@
-
 angular.module('sfTimer')
-.controller('timerGridCtrl', ['$scope', 'dataProvider','eventBroadcaster', 'timeSorter', '$interval',
-    function($scope, dataProvider, eventBroadcaster, timerSorter, $interval) {
+.controller('timerGridCtrl', ['$scope', 'dataProvider','eventBroadcaster', 'timeSorter', '$interval','socket',
+    function($scope, dataProvider, eventBroadcaster, timerSorter, $interval, socket) {
     
     $scope.activeTimers = [];
+    var activeGroup = null;
+      
+    function handleDelete(e, data) {
+      if ($scope.activeGroup === null) return;
+      dataProvider.removeTimer(data)
+      .then(function(){
+        $scope.activeTimers = _.filter($scope.activeTimers, function(i){
+          return i.id !== data.id;
+        });
+      }).catch(function(err){
+        console.log(err);
+      });
+    }
+    
+    function handleCreate(e, data) {
+      $scope.activeTimers.push(data); 
+    }
+    
+    function handleStart(e, data){
+      if (!data) return;
+      data.running = true;
+
+      if (!data.start_time){
+        data.start_time = moment().format('YYYY-MM-DD HH:mm:ss');
+      }
+
+      dataProvider.updateTimer(data)
+      .catch(function(err){
+        console.log(err);
+      });
+      
+    }
+    
+    function handlePause(e, data) {
+      if (!data) return;
+      data.running = false;
+      data.last_tick = moment().format('YYYY-MM-DD HH:mm:ss');
+      dataProvider.updateTimer(data)
+      .catch(function(err){
+        console.log(err);
+      });
+    }
+    
+    function handleReset(e, data){
+      if (!data) return;
+      dataProvider.updateTimer(data)
+      .then(function(timer){
+        for(var i = 0; i < $scope.activeTimers.length; i++){
+          if ($scope.activeTimers[i].id === timer.id){
+            $scope.activeTimers[i] = timer;
+            break;
+          }
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    }
 
     $interval(function(){
         if (!$scope.activeTimers.length) return;
@@ -23,71 +80,52 @@ angular.module('sfTimer')
         }));
     }, 750);
         
-    $scope.$on(eventBroadcaster.event.timer.delete, function(e, data) {
-        if ($scope.activeGroup === null) return; 
-        dataProvider.removeTimer(data)
-        .then(function(){
-            $scope.activeTimers = _.filter($scope.activeTimers, function(i){
-                return i.id !== data.id;
-            });
-        }).catch(function(err){
-            console.log(err);
-        });
-    });
-
-    $scope.$on(eventBroadcaster.event.timer.created, function(event, val){
-        $scope.activeTimers.push(val); 
-    });
-
-    $scope.$on(eventBroadcaster.event.timer.started, function(event, val){
-        if (!val) return;
-        val.running = true;
-        
-        if (!val.start_time){
-            val.start_time = moment().format('YYYY-MM-DD HH:mm:ss');
-        } 
-        
-        dataProvider.updateTimer(val)
-            .catch(function(err){
-                console.log(err);
-            });
-    });
-
-    $scope.$on(eventBroadcaster.event.timer.paused, function(event, val){
-        if (!val) return;
-        val.running = false;
-        val.last_tick = moment().format('YYYY-MM-DD HH:mm:ss');
-        dataProvider.updateTimer(val)
-            .catch(function(err){
-                console.log(err);
-            });
-    });
-
-    $scope.$on(eventBroadcaster.event.timer.reset,function(event, val){
-        if (!val) return;
-        dataProvider.updateTimer(val)
-            .then(function(timer){
-                for(var i = 0; i < $scope.activeTimers.length; i++){
-                    if ($scope.activeTimers[i].id === timer.id){
-                        $scope.activeTimers[i] = timer;
-                        break;
-                    } 
-                }
-            })
-            .catch(function(err) { 
-            console.log(err); 
-        });
-    });
-
+    /** 
+     * Event Timers to manage timers in set
+     */
+    $scope.$on(eventBroadcaster.event.timer.delete, handleDelete);
+    $scope.$on(eventBroadcaster.event.timer.created, handleCreate);
+    $scope.$on(eventBroadcaster.event.timer.started, handleStart);
+    $scope.$on(eventBroadcaster.event.timer.paused, handlePause);
+    $scope.$on(eventBroadcaster.event.timer.reset, handleReset);
+      
     $scope.$on(eventBroadcaster.event.timerGroup.delete, function(){
         $scope.activeTimers = [];
     });
         
     $scope.$on(eventBroadcaster.event.timerGroup.selected, function(event, val){
+        activeGroup =  val;
         dataProvider.getTimersByGroup(val)
             .then(function(timers){
                 $scope.activeTimers = timers;
         });
         
     });
+
+    /**
+     * Socket event bindings
+     */
+    var events = socket.events;
+    socket.on(events.update, function(data){
+      if (!shouldRecognizeEvent(data)) return;
+      var object = data.payload;
+      
+      $scope.$broadcast(eventBroadcaster.event.timer.updateSelf, object);
+    });
+      
+
+    socket.on(events.create, function(data){
+      if (!shouldRecognizeEvent(data)) return;
+      $scope.activeTimers.push(data.payload);
+    });
+
+    socket.on(events.delete, function(data){
+      if (!shouldRecognizeEvent(data)) return;
+
+    });
+
+   function shouldRecognizeEvent(data) {
+     if (data.entity !== 'timer') return false;
+     return !(activeGroup === null || data.payload.timer_group_id !== activeGroup.id);
+   }
 }]);

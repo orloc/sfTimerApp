@@ -15,8 +15,8 @@ angular.module('sfTimer')
     };
 
     dataProvider.getTimerGroups()
-        .then(function(times) {
-            $scope.groups = times;
+        .then(function(groups) {
+            $scope.groups = groups;
         }).catch(function(err){
         console.log(err);
     });
@@ -26,7 +26,6 @@ angular.module('sfTimer')
     });
 
     $scope.$on(eventBroadcaster.event.timerGroup.create, function(e, data){
-        console.log(data);
         $scope.groups.push(data);
     });
 

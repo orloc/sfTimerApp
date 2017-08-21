@@ -26,7 +26,6 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
                 TICK: 'timer-tick'
             };
 
-
             $scope.statuses = {
                 BEGUN: 1,
                 HALF: 2,
@@ -76,7 +75,6 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
                 $scope.progressStatus = $scope.classArr[$scope.status-1];
             };
 
-
             $scope.$on(timerEvents.TIMER_STOPPED, function(){
                 $scope.timer.running = false;
             });
@@ -92,6 +90,25 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
                     $scope.setTimerStopped();
                 }
             });
+            
+            $scope.$on(eventBroadcaster.event.timer.updateSelf, function(e, data) {
+                if (data.id !== $scope.timer.id) return;
+                $scope.timer = Object.assign($scope.timer, data);
+
+                // reset
+                if (data.last_timer === null && data.start_time === null && data.running === 0){
+                    $scope.$broadcast(timerEvents.RESET);
+                    $scope.$emit('timer-set-countdown', $scope.getDesiredTime(data));
+                    return;
+                }
+
+                if (data.running === 0){
+                    $scope.$broadcast(timerEvents.STOP);
+                    return;
+                }
+
+                $scope.$broadcast(timerEvents.START);
+            });
 
             $scope.pause = function(){
                 $scope.timer.running = false;
@@ -99,9 +116,12 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
                 $scope.$broadcast(timerEvents.STOP);
             };
 
-            $scope.start = function(){
+            $scope.start = function(stopEmit){
+                
                 $scope.timer.running = true;
-                eventBroadcaster.broadcast(eventBroadcaster.event.timer.started, $scope.timer);
+                if(stopEmit !== true){
+                  eventBroadcaster.broadcast(eventBroadcaster.event.timer.started, $scope.timer);
+                }
                 $scope.$broadcast(timerEvents.START);
             };
 
@@ -114,7 +134,7 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
                 $scope.timer.last_tick = null;
                 $scope.timer.start_time = null;
                 eventBroadcaster.broadcast(eventBroadcaster.event.timer.reset, $scope.timer);
-                $scope.$broadcast('timer-reset');
+                $scope.$broadcast(timerEvents.RESET);
             };
             // Body
 
@@ -182,7 +202,7 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
         }],
         link : function(scope, elem, attr){
             if (!scope.hasStopped && scope.timer.running === 1){
-                scope.start();
+                scope.start(true);
             }
 
         }

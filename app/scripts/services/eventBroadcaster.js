@@ -12,7 +12,8 @@ angular.module('sfTimer')
                 started: 'event:timer:started',
                 reset: 'event:timer:reset',
                 paused: 'event:timer:paused',
-                tick: 'event:timer:tick'
+                tick: 'event:timer:tick',
+                updateSelf: 'event:timer:updateSelf',
             },
             timerGroup: {
                 selected: 'event:timerGroup:selected',

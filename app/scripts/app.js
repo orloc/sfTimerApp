@@ -83,41 +83,43 @@ angular.module('sfTimer', [
         
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-.run(['$rootScope', '$state', 'authManager', '$location','securityManager',
-    function($rootScope, $state, authManager, $location, securityManager){
-    authManager.checkAuthOnRefresh();
-    authManager.redirectWhenUnauthenticated();
+.run(['$rootScope', '$state', 'authManager', '$location','securityManager', 'socket',
+    function($rootScope, $state, authManager, $location, securityManager, socket){
+      authManager.checkAuthOnRefresh();
+      authManager.redirectWhenUnauthenticated();
 
-    if (!securityManager.getValidToken()) {
+      if (!securityManager.getValidToken()) {
         $location.path('/login');
-    }
-        
-    $rootScope.safeApply =  function(fn) {
+      }
+      
+      socket.connect(); 
+
+      $rootScope.safeApply =  function(fn) {
         var phase = this.$root.$$phase;
         if(phase == '$apply' || phase == '$digest') {
-            if(fn && (typeof(fn) === 'function')) {
-                fn();
-            }
+          if(fn && (typeof(fn) === 'function')) {
+            fn();
+          }
         } else {
-            this.$apply(fn);
+          this.$apply(fn);
         }
-    };
+      };
 
-    $rootScope.$on('tokenHasExpired', function() {
+      $rootScope.$on('tokenHasExpired', function() {
         $rootScope.isAuthed = false;
         $state.go('login');
-    });
+      });
 
-    $rootScope.$on('$stateChangeStart', function(e, to){
+      $rootScope.$on('$stateChangeStart', function(e, to){
         if (to.data && to.data.requireLogin){
-            var validToken = securityManager.getValidToken();
+          var validToken = securityManager.getValidToken();
 
-            if (!validToken){
-                securityManager.logout();
-            } else {
-                $rootScope.isAuthed = validToken;
-            }
+          if (!validToken){
+            securityManager.logout();
+          } else {
+          $rootScope.isAuthed = validToken;
+          }
         }
-    });
+      });
 }]);
 
