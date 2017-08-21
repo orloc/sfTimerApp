@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="stylesheet" href="styles/vendor-54c0155262.css">
-    <link rel="stylesheet" href="styles/main-ef639b81ec.css">
+    <link rel="stylesheet" href="styles/main-afa5325bde.css">
   </head>
   <body ng-app="sfTimer" ng-cloak>
       <div class="cover"></div>
@@ -21,20 +21,24 @@
 
     <script src="scripts/vendor-c530ab6a2a.js"></script>
 
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script src="/scripts/app.js"></script>
 
     <script src="/scripts/services/dataProvider.js"></script>
     <script src="/scripts/services/eventBroadcaster.js"></script>
-    <script src="/scripts/services/socketManager.js"></script>
+    <script src="/scripts/services/socket.js"></script>
     <script src="/scripts/services/securityManager.js"></script>
     <script src="/scripts/services/timeSorter.js"></script>
 
     <script src="/scripts/controllers/timerGridController.js"></script>
+    <script src="/scripts/controllers/settingsController.js"></script>
+    <script src="/scripts/controllers/invitationController.js"></script>
     <script src="/scripts/controllers/sideBarController.js"></script>
     <script src="/scripts/controllers/headerController.js"></script>
 
     <script src="/scripts/directives/loginRegister.js"></script>
     <script src="/scripts/directives/timerElement.js"></script>
+    <script src="/scripts/directives/closeWindow.js"></script>
     <script src="/scripts/directives/customTimerForm.js"></script>
     <script src="/scripts/directives/editGroupForm.js"></script>
     <script src="/scripts/directives/deleteGroupForm.js"></script>

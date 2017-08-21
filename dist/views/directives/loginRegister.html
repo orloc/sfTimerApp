@@ -62,43 +62,6 @@
     </div>
 </form>
 
-<form name="guestForm"
-      ng-if="pageType == pages.guest"
-      ng-class="{
-        'form form-inline': inline
-      }"
-      ng-submit="submitGuest()">
-    <div class="form-group">
-        <div class="input-group">
-            <input name="username"
-                   type="text"
-                   required
-                   ng-model="data.username"
-                   class="form-control"
-                   placeholder="Username">
-            <div class="input-group-addon">
-                <i class="fa"
-                   ng-class="{
-                        'fa-check': guestForm.username.$valid,
-                        'fa-times': guestForm.username.$invalid,
-                    }"></i>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-1"></div>
-        <div class="col-xs-10">
-            <button type="submit"
-                    ng-disabled="guestForm.$invalid"
-                    class="btn btn-default btn-block"> Continue as a Guest </button>
-            <hr>
-            <a ng-click="changeView(pages.login)"
-               class="btn btn-link btn-sm"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;&nbsp;Back To Login</a>
-        </div>
-        <div class="col-xs-1"></div>
-    </div>
-</form>
-
 <!-- Registration -->
 <form name="registrationForm"
       ng-if="pageType == pages.register"
@@ -136,10 +99,11 @@
                 <i class="fa"
                    ng-class="{
                         'fa-check': registrationForm.profile_name.$valid,
-                        'fa-times': registrationForm.profile_name.$invalid,
+                        'fa-times': registrationForm.profile_name.$invalid || !usernameNotLogin(),
                     }"></i>
             </div>
         </div>
+        <p class="small muted text-center">Profile name cannot be the same as your login</p>
     </div>
     <div class="form-group">
         <div class="input-group">
@@ -171,16 +135,17 @@
                 <i class="fa"
                    ng-class="{
                         'fa-check': registrationForm.password_confirmation.$valid,
-                        'fa-times': registrationForm.password_confirmation.$invalid,
+                        'fa-times': registrationForm.password_confirmation.$invalid || !passwordsMatch(),
                     }"></i>
             </div>
         </div>
+        <p class="small muted text-center">Passwords must match and be at least 6 characters long</p>
     </div>
     <div class="row">
         <div class="col-xs-1"></div>
         <div class="col-xs-10">
             <button type="submit"
-                    ng-disabled="registrationForm.$invalid"
+                    ng-disabled="registrationForm.$invalid || passwordsMatch() !== true || usernameNotLogin() === false"
                     class="btn btn-default btn-block"> Complete Registration </button>
 
             <hr>
