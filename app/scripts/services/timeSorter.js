@@ -9,6 +9,10 @@ angular.module('sfTimer')
         remove( { timer: val }, activeTimes);
     });
 
+    $rootScope.$on(eventBroadcaster.event.timer.deleteWS, function(e, val) {
+        remove( { timer: val }, activeTimes);
+    });
+
     $rootScope.$on(eventBroadcaster.event.timerGroup.selected, function() {
         activeTimes = [];
         seen = {};

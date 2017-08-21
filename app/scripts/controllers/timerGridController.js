@@ -120,12 +120,19 @@ angular.module('sfTimer')
     });
 
     socket.on(events.delete, function(data){
-      if (!shouldRecognizeEvent(data)) return;
-
+      if (!shouldRecognizeEvent(data, true)) return;
+      var object = data.payload;
+      eventBroadcaster.broadcast(eventBroadcaster.event.timer.deleteWS, object);
+      $scope.activeTimers = $scope.activeTimers.filter(function(t){
+        return parseInt(t.id) !== parseInt(object.id);
+      });
     });
 
-   function shouldRecognizeEvent(data) {
+   function shouldRecognizeEvent(data, withoutGroup) {
      if (data.entity !== 'timer') return false;
-     return !(activeGroup === null || data.payload.timer_group_id !== activeGroup.id);
-   }
+     if (activeGroup !== null ){
+       if (withoutGroup) return true;
+       return data.payload.timer_group_id === activeGroup.id;
+     }
+  }
 }]);

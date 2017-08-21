@@ -9,6 +9,7 @@ angular.module('sfTimer')
             timer: {
                 created: 'event:timer:created',
                 delete: 'event:timer:deleted',
+                deleteWS: 'event:timer:deleted:ws',
                 started: 'event:timer:started',
                 reset: 'event:timer:reset',
                 paused: 'event:timer:paused',
