@@ -1,0 +1,47 @@
+<form name="customTimerForm"
+      ng-class="{
+        'form form-inline': inline
+      }"
+      ng-submit="submit()">
+
+    <h4>Add Timer</h4>
+    <div ng-show="formError" class="alert alert-danger pull-left">
+        <p>{{ formError}}</p>
+    </div>
+    <p class="small"><strong>Duration format</strong>: <b>4h20m30s</b></p>
+    <div class="form-group">
+        <div class="input-group">
+            <input name="duration"
+                   type="text"
+                   required
+                   ng-pattern="durationPattern"
+                   ng-model="formData.duration"
+                   class="form-control"
+                   placeholder="Duration">
+            <span class="input-group-addon">
+                <i ng-show="customTimerForm.duration.$valid" class="fa fa-check"></i>
+                <i ng-show="customTimerForm.duration.$invalid" class="fa fa-times"></i>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <input name="label"
+                   required
+                   ng-model="formData.label"
+                   type="text"
+                   class="form-control"
+                   placeholder="Label">
+            <span class="input-group-addon">
+                <i ng-show="customTimerForm.label.$valid" class="fa fa-check"></i>
+                <i ng-show="customTimerForm.label.$invalid" class="fa fa-times"></i>
+            </span>
+        </div>
+
+    </div>
+    <button type="submit"
+            ng-disabled="customTimerForm.$invalid"
+            class="btn btn-primary btn-block">
+        Create Timer
+    </button>
+</form>

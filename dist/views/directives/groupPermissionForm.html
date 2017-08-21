@@ -1,0 +1,23 @@
+<h4>Manage Permissions</h4>
+
+<ul ng-show="user_access.length">
+    <li ng-repeat="user in user_access"></li>
+</ul>
+
+<ul ng-show="!user_access.length">
+    <li>No users invited</li>
+</ul>
+<form name="groupPermissions"
+      ng-class="{
+        'form form-inline': inline
+      }"
+      ng-submit="submit()">
+
+    <p class="small">Enter the userId of the person who invited you to this timer board.</p>
+    <input  class="form-control"
+            placeholder="Enter a users id"
+            ng-model="formData.username"
+            name="username" type="text"/>
+
+    <button class="btn btn-block btn-primary" type="submit">Invite User</button>
+</form>
