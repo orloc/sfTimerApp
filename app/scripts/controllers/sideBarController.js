@@ -55,7 +55,7 @@ angular.module('sfTimer')
     function deleteGroup(e, data){
         var i = 0;
         for (i ; i < $scope.groups.length; i++){
-            if ($scope.groups[i].id === data.id){
+            if (parseInt($scope.groups[i].id) === parseInt(data.id)){
                 break;
             }
         }
