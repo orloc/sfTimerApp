@@ -94,12 +94,11 @@ angular.module('sfTimer').directive('timerElement', ['eventBroadcaster', functio
             $scope.$on(eventBroadcaster.event.timer.updateSelf, function(e, data) {
                 if (data.id !== $scope.timer.id) return;
                 $scope.timer = Object.assign($scope.timer, data);
-
-                // reset
-                if (data.last_timer === null && data.start_time === null && data.running === 0){
+                if (data.last_tick === null 
+                    && data.start_time === null 
+                    && data.running === 0)
+                {
                     $scope.$broadcast(timerEvents.RESET);
-                    $scope.durationSeconds = $scope.getDesiredTime(data);
-                    $scope.$emit('timer-set-countdown-seconds', $scope.durationSeconds);
                     return;
                 }
 

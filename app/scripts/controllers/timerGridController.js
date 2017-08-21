@@ -50,6 +50,7 @@ angular.module('sfTimer')
       if (!data) return;
       dataProvider.updateTimer(data)
       .then(function(timer){
+        console.log(timer);
         for(var i = 0; i < $scope.activeTimers.length; i++){
           if ($scope.activeTimers[i].id === timer.id){
             $scope.activeTimers[i] = timer;
@@ -99,7 +100,6 @@ angular.module('sfTimer')
             .then(function(timers){
                 $scope.activeTimers = timers;
         });
-        
     });
 
     /**
@@ -109,10 +109,8 @@ angular.module('sfTimer')
     socket.on(events.update, function(data){
       if (!shouldRecognizeEvent(data)) return;
       var object = data.payload;
-      
       $scope.$broadcast(eventBroadcaster.event.timer.updateSelf, object);
     });
-      
 
     socket.on(events.create, function(data){
       if (!shouldRecognizeEvent(data)) return;
