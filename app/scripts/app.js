@@ -76,7 +76,9 @@ angular.module('sfTimer', [
             return store.get(apiConfig.tokenStorageName);
         }],
         whiteListedDomains: [
-            'eqt.dev'
+            'eqt.dev',
+            'eqt.orloc.me',
+            'eqtimers.orloc.me'
         ],
         authHeader: 'X-EQTAccess-Token'
     });
