@@ -45,3 +45,11 @@ body {
   color: $lightB;
 }
 
+
+.faq {
+  color: $fontC;
+
+  .faq-content {
+    padding: 3em;
+  }
+}

@@ -68,7 +68,14 @@ angular.module('sfTimer', [
         templateUrl: 'views/pages/timers.html',
         data: { requireLogin: true }
     });
-        
+
+    $stateProvider.state({
+      name: 'faq',
+      url: '/faq',
+      templateUrl: 'views/pages/faq.html',
+      data: { requireLogin: true }
+    });
+
     $urlRouteProvider.otherwise('/login');
         
     jwtOptionsProvider.config({

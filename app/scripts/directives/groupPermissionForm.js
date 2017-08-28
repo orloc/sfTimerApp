@@ -19,21 +19,26 @@ angular.module('sfTimer')
                     $scope.formData = {};
                     $scope.error = false;
 
-                    dataProvider.getGroupMembers($scope.existingGroup)
-                        .then(function (members) {
-                            $scope.user_access = members;
-                        });
+                    updateAccess();
 
                     $scope.submit = function () {
                         $scope.error = false;
                         $scope.formData.group_id = $scope.existingGroup.id;
                         dataProvider.createInvitation($scope.formData)
                             .then(function (data) {
-                                $scope.user_access.push(data);
+                                // needs API to implement message mapping prior to puehes.
+                                updateAccess();
                             }).catch(function (err) {
                             $scope.error = err.message;
                         });
                     };
+                    
+                    function updateAccess(){
+                        dataProvider.getGroupMembers($scope.existingGroup)
+                        .then(function (members) {
+                            $scope.user_access = members;
+                        });
+                    }
                 }]
             };
         }]);

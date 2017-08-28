@@ -9,14 +9,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">EQ Timers</a>
+                <a class="navbar-brand">KWSM Timers <i class="small muted">alpha 1.0</i></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="nav navbar-nav" ng-show="isAuthed">
-                    <li class="active"><a ui-sref="timers">Timers</a></li>
+                    <li ui-sref-active="active"><a ui-sref="timers">Timers</a></li>
+                    <li ui-sref-active="active"><a ui-sref="faq">FAQ</a></li>
                     <!--
-                    <li><a ui-sref="spawns">Spawns</a></li>
+                    <li class="active"><a ui-sref="spawns">Spawns</a></li>
                     <li><a ui-sref="users">Users</a></li>
                     -->
                 </ul>

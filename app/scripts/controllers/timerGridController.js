@@ -3,7 +3,7 @@ angular.module('sfTimer')
     function($scope, dataProvider, eventBroadcaster, timerSorter, $interval, socket) {
     
     $scope.activeTimers = [];
-    var activeGroup = null;
+    $scope.activeGroup = null;
       
     function handleDelete(e, data) {
       if ($scope.activeGroup === null) return;
@@ -95,7 +95,7 @@ angular.module('sfTimer')
     });
         
     $scope.$on(eventBroadcaster.event.timerGroup.selected, function(event, val){
-        activeGroup =  val;
+        $scope.activeGroup =  val;
         dataProvider.getTimersByGroup(val)
             .then(function(timers){
                 $scope.activeTimers = timers;
@@ -128,9 +128,9 @@ angular.module('sfTimer')
 
    function shouldRecognizeEvent(data, withoutGroup) {
      if (data.entity !== 'timer') return false;
-     if (activeGroup !== null ){
+     if ($scope.activeGroup !== null ){
        if (withoutGroup) return true;
-       return data.payload.timer_group_id === activeGroup.id;
+       return data.payload.timer_group_id === $scope.activeGroup.id;
      }
   }
 }]);

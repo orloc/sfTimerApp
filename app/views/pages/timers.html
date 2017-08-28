@@ -51,6 +51,7 @@
 
     <!-- Grid Section -->
     <div class="col-sm-9 timer-grid" ng-controller="timerGridCtrl">
+        <div ng-if="activeGroup === null" ng-include="'/views/pages/faq.html'"></div>
         <h4 ng-if="!activeTimers.length && activeGroup !== null" class="text-center muted no-timers">No Timers</h4>
         <timer-element
                 class="col-sm-4 col-md-3"
