@@ -13,6 +13,10 @@ var yeoman = {
   dist: 'dist'
 };
 
+process.on('uncaughtException', function(Err){
+    console.log(Err);
+});
+
 var paths = {
   scripts: [yeoman.app + '/scripts/**/*.js'],
   styles: [yeoman.app + '/styles/**/*.scss'],
