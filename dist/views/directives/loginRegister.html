@@ -1,0 +1,157 @@
+<div ng-if="formError" class="alert alert-danger">
+    {{ formError }}
+</div>
+<form name="loginForm"
+      ng-if="pageType == pages.login"
+      ng-class="{
+        'form form-inline': inline
+      }"
+      ng-submit="submitLogin()">
+    <div class="form-group">
+        <div class="input-group">
+            <input name="username"
+                   type="text"
+                   required
+                   ng-model="data.username"
+                   class="form-control"
+                   placeholder="Username">
+            <div class="input-group-addon">
+                <i class="fa"
+                    ng-class="{
+                        'fa-check': loginForm.username.$valid,
+                        'fa-times': loginForm.username.$invalid,
+                    }"></i>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <input name="password"
+                   required
+                   ng-model="data.password"
+                   type="password"
+                   class="form-control"
+                   placeholder="Password">
+
+            <div class="input-group-addon">
+
+                <i class="fa"
+                   ng-class="{
+                        'fa-check': loginForm.password.$valid,
+                        'fa-times': loginForm.password.$invalid,
+                    }"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-10">
+            <div class="btn-group">
+                <button type="submit"
+                        ng-disabled="loginForm.$invalid"
+                        class="btn btn-default btn-sm"> Login </button>
+                <a ng-click="changeView(pages.register)"
+                        class="btn btn-link btn-sm">or Register</a>
+            </div>
+            <!--
+            <a ng-click="changeView(pages.guest)"
+                    class="btn btn-sm btn-default pull-right">Guest Login</a>
+            -->
+        </div>
+        <div class="col-xs-1"></div>
+    </div>
+</form>
+
+<!-- Registration -->
+<form name="registrationForm"
+      ng-if="pageType == pages.register"
+      ng-class="{
+        'form form-inline': inline
+      }"
+      ng-submit="submitRegister()">
+    <div class="form-group">
+        <div class="input-group">
+            <input name="username"
+                   type="text"
+                   required
+                   ng-model="data.username"
+                   class="form-control"
+                   placeholder="Username">
+            <div class="input-group-addon">
+
+                <i class="fa"
+                   ng-class="{
+                        'fa-check': registrationForm.username.$valid,
+                        'fa-times': registrationForm.username.$invalid,
+                    }"></i>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <input name="profile_name"
+                   type="text"
+                   required
+                   ng-model="data.profile_name"
+                   class="form-control"
+                   placeholder="Profile Name">
+            <div class="input-group-addon">
+                <i class="fa"
+                   ng-class="{
+                        'fa-check': registrationForm.profile_name.$valid,
+                        'fa-times': registrationForm.profile_name.$invalid || !usernameNotLogin(),
+                    }"></i>
+            </div>
+        </div>
+        <p class="small muted text-center">Profile name cannot be the same as your login</p>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <input name="password"
+                   required
+                   ng-model="data.password"
+                   type="password"
+                   class="form-control"
+                   placeholder="Password">
+            <div class="input-group-addon">
+                <i class="fa"
+                   ng-class="{
+                        'fa-check': registrationForm.password.$valid,
+                        'fa-times': registrationForm.password.$invalid,
+                    }"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="input-group">
+            <input name="password_confirmation"
+                   required
+                   ng-model="data.password_confirmation"
+                   type="password"
+                   class="form-control"
+                   placeholder="Password Confirmation">
+            <div class="input-group-addon">
+                <i class="fa"
+                   ng-class="{
+                        'fa-check': registrationForm.password_confirmation.$valid,
+                        'fa-times': registrationForm.password_confirmation.$invalid || !passwordsMatch(),
+                    }"></i>
+            </div>
+        </div>
+        <p class="small muted text-center">Passwords must match and be at least 6 characters long</p>
+    </div>
+    <div class="row">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-10">
+            <button type="submit"
+                    ng-disabled="registrationForm.$invalid || passwordsMatch() !== true || usernameNotLogin() === false"
+                    class="btn btn-default btn-block"> Complete Registration </button>
+
+            <hr>
+            <a ng-click="changeView(pages.login)"
+               class="btn btn-link btn-sm"><i class="fa fa-chevron-left"></i> &nbsp;&nbsp;&nbsp;Back To Login</a>
+        </div>
+        <div class="col-xs-1"></div>
+    </div>
+</form>

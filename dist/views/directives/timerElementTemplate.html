@@ -1,0 +1,48 @@
+<div class="timer">
+    <timer countdown="durationSeconds" interval="1000" auto-start="false">
+        <div class="inner-timer">
+            <div class="header row">
+                <div class="col-sm-10">
+                    <h5>{{ $parent.timer.label | limitTo: 15 }} <span ng-show="$parent.timer.label.length > 15">...</span></h5>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-block btn-warning" ng-click="removeTimer()"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="progress">
+                <div class='progress-bar active'
+                     ng-class="[$parent.progressStatus]"
+                     style="min-width: 1em;width: {{$parent.getProgress(progressBar, countdown)}}%;"></div>
+            </div>
+            <div class="row timer-body">
+                <div class="col-sm-8">
+                    <p>
+                        <span ng-bind="$parent.getRemainingTime(countdown)"></span> /
+                        <span class="muted text-center small">{{ $parent.timer.duration}}</span>
+                    </p>
+                    <div class="btn-group text-center">
+                        <button class="btn btn-sm btn-default"
+                                ng-disabled="$parent.hasStopped"
+                                ng-if="!timer.running"
+                                ng-click="start()"><i class="fa fa-play"></i></button>
+                        <button class="btn btn-sm btn-default"
+                                ng-disabled="$parent.hasStopped"
+                                ng-if="timer.running"
+                                ng-click="pause()"><i class="fa fa-stop"></i></button>
+                        <button class="btn btn-sm btn-default" ng-click="resetTimer()">Reset</button>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="progress-spinner pull-right">
+                        <div class="not-started text-center" ng-if="!timer.running">
+                            <div>
+                                <i class="fa fa-power-off" style="margin-top: 10px"></i>&nbsp;<span class="muted small" style="display: inline;">Off</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </timer>
+</div>
+

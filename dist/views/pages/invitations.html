@@ -1,0 +1,65 @@
+<!-- Page Content -->
+<div class="row user-settings" ng-controller="invitationCtrl">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <div class="row  well">
+            <h3>New Invitations</h3>
+            <p>Below you can approve or reject invitations to other Timer Groups.  Once invited these groups will appear with the rest of the timer groups you have.</p>
+            <p>Depending on the permission you have been granted - you will be able to perform all, or a subset of the actions you normally would be able to.</p>
+            <div class="col-sm-12">
+                <p ng-show="!loaded">Loading...</p>
+                <p ng-show="!invitations.length">
+                    No Invitations to show.
+                </p>
+
+                <ul ng-show="invitations.length" class="list-group">
+                    <li ng-repeat="invite in invitations" class="list-group-item">
+                        <p>
+                            <i>Invitation from: </i> <strong>{{ invite.user.profile_name }}</strong> <i>to Group</i> <strong>{{ invite.group.name }}</strong>
+                            <span class="pull-right muted small">
+                                {{ getStatus(invite.status) }}
+                            </span>
+                        </p>
+                        <p class="small muted"><strong>Description:</strong> {{ invite.group.description}}</p>
+                        <div class="button-group pull-right">
+                            <button class="btn btn-small btn-default" ng-click="reject(invite)">Reject</button>
+                            <button class="btn btn-small btn-primary" ng-click="approve(invite)">Approve</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="completed.length">
+                <h3>Past Invitations</h3>
+                <div class="col-sm-12">
+                    <ul class="list-group">
+                        <li ng-repeat="invite in completed" class="list-group-item" style="opacity: 0.6">
+                            <p>
+                                <i>Invitation from: </i> <strong>{{ invite.user.profile_name }}</strong> <i>to Group</i> <strong>{{ invite.group.name }}</strong>
+                                <span class="pull-right muted small">
+                                    {{ getStatus(invite.status) }}
+                                </span>
+                            </p>
+                            <p class="small muted"><strong>Description:</strong> {{ invite.group.description}}</p>
+                            <p class="small muted"><strong>Accpeted:</strong> {{ invite.actioned_at | date }}</p>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div ng-if="deleted.length">
+                <h3>Deleted Invitations</h3>
+                <div class="col-sm-12">
+                    <ul class="list-group">
+                        <li ng-repeat="invite in deleted" class="list-group-item" style="opacity: 0.4">
+                            <p>
+                                <i>Invitation from: </i> <strong>{{ invite.user.profile_name }}</strong> <i>to Group</i> <strong>{{ invite.group.name }}</strong>
+                            </p>
+                            <p class="text-danger ">DELETED on {{ invite.group.deleted_at | date }}</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    <div class="col-sm-3"></div>
+</div>
