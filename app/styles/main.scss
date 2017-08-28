@@ -21,6 +21,10 @@ body {
   overflow-x: hidden;
 }
 
+.main {
+  margin-top: 70px;
+}
+
 .cover {
   opacity: 0.8;
   background: black;
@@ -52,4 +56,8 @@ body {
   .faq-content {
     padding: 3em;
   }
+}
+
+.question-answer-block {
+  margin-bottom: 4em;
 }

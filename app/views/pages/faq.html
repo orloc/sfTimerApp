@@ -1,7 +1,40 @@
 <div class="faq row ">
     <div class="col-xs-1"></div>
     <div class="col-xs-10 faq-content"  style="background: black;">
-        <h2>FAQ / Guide</h2>
+        <h2>FAQ / Guide <span class="small pull-right">USAGE INSTRUCTION BELOW</span></h2>
+        <p class="text-danger">ALPHA BUILD - <span class="small muted">There be dragons - beware.  Thank you for your help making this a robust solution for all! Please follow bug submission guidelines below.</span></p>
+
+        <div class="question-answer-block">
+            <h3 class="question">What is the intent of this project?</h3>
+            <p class="answer">To provide a integrated easy to use place to share timers and aggregate mob tracking efforts. <br>
+                Originally - I made this for myself to be more competitive while hunting Seafuries, I hated always opening up many different timer windows and wanted something that I could share with a friend.
+                <br>
+                <br>
+                Since those days I have completely rewritten the small application this started out to be into a more robust fully featured tracking "foundation" upon which I plan to extend / add new features as the current feature set gets polished out and bugs get fixed.
+            </p>
+        </div>
+
+        <div class="question-answer-block">
+            <h3 class="question">How can this make my life better?</h3>
+            <p class="answer">
+                If you have ever wanted to keep / have kept timers in the past you know it can be frustrating.
+            </p>
+            <ul>
+                <li>
+                    Never have to worry about "setting up" timers again!
+                </li>
+                <li>
+                    Save pre-configured timer groups for specific zones and share them with people you often group with.
+                </li>
+                <li>
+                    Spread time keeping responsibility
+                </li>
+                <li>
+                    Provide transparency to the raiding process for all
+                </li>
+            </ul>
+        </div>
+
         <div class="question-answer-block">
             <h3 class="question">What does this do ?</h3>
             <p class="answer">You can create "timer groups" those timer groups can be thought of as buckets of timers.  Each group can be shared with specific individuals based on the owner(s) choosing. At the moment there is only one type of permission that can be granted</p>
@@ -13,6 +46,28 @@
                 <li>Sharing of timer groups ( no distinction between roles at this time - all are owners) </li>
             </ul>
         </div>
+        <div class="question-answer-block">
+            <h3 class="question">What does not do?</h3>
+            <p class="answer">
+                Parse your client logs or interact with your physical machine / game. ( v2 maybe )
+            </p>
+        </div>
+
+        <div class="question-answer-block">
+            <h3 class="question">What is planned to be done?</h3>
+            <ul>
+                <li>Add better support for roles / permissions - implement read and write permissions on invitations</li>
+                <li>Add more "action cues" - who is viewing current group // who did what action on a group you are viewing // better visualization of actions</li>
+                <li>Integration tests across 3 primary components</li>
+                <li>Implement reset password functionality</li>
+                <i></i>
+                <li>Better cross browser test coverage</li>
+                <li>Implement persistent message store to allow for socket connection loss without user interruption</li>
+                <li>Implement server side timer 'audits' for running timers to counter client side cloak drift / various architecture clock speeds.</li>
+            </ul>
+        </div>
+
+
 
         <div class="question-answer-block">
             <h3 class="question">How do I use this application ?</h3>
@@ -66,18 +121,7 @@
                     <img class="img-responsive" src="/images/walkthrough/fullTimers.png"/>
                 </div>
             </div>
-        </div>
-
-        <div class="question-answer-block">
-            <h3 class="question">What does not do?</h3>
-            <p class="answer">
-                Parse your client logs or interact with your physical machine / game.
-            </p>
-        </div>
-
-        <div class="question-answer-block">
-            <h3 class="question">What is the intent of this project?</h3>
-            <p class="answer">To provide a integrated easy to use place to share timers and aggregate mob tracking efforts.</p>
+            <p> If you have any questions that are not adequately answered here please submit an issue report - we will use these to update our FAQ's and help others who run into similar issues.</p>
         </div>
 
         <div class="question-answer-block">
